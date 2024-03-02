@@ -6,8 +6,8 @@
     <title>E7 Speed Analysis</title>
     <style>
         img {
-            max-width: 200px;
-            max-height: 200px;
+            max-width: 400px;
+            max-height: 400px;
             width: 100%;
             height: auto;
             display: block;
@@ -58,9 +58,9 @@ Load Image From File:  <input type="file" accept="image/*" id="imageInput" oncha
                     const height = displayedImage.height;
 
                     // Boyutları kontrol et ve gerekirse düzenle
-                    if (width > 200 || height > 200) {
-                        displayedImage.style.width = "200px";
-                        displayedImage.style.height = "200px";
+                    if (width > 400 || height > 400) {
+                        displayedImage.style.width = "400px";
+                        displayedImage.style.height = "400px";
                     } else {
                         displayedImage.style.width = width + "px";
                         displayedImage.style.height = height + "px";
