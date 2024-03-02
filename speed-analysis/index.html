@@ -8,10 +8,9 @@
         img {
             max-width: 200px;
             max-height: 200px;
-            width: auto; /* Resmin oranına uygun olarak genişlik ayarla */
-            height: auto; /* Resmin oranına uygun olarak yükseklik ayarla */
-            display: block; /* Dikey hizalama sorunlarını çözmek için */
-            /* margin: auto; /* Resmi yatayda ortala */
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         #findButton {
@@ -50,13 +49,21 @@ Load Image From File:  <input type="file" accept="image/*" id="imageInput" oncha
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
+                // Yeni resmi önizleme için geçici bir görüntü olarak kullan
                 displayedImage.src = e.target.result;
 
-                // Kontrol için resmin boyutlarını güncelle
+                // Yüklenen resmin boyutlarını kontrol et
                 displayedImage.onload = function () {
-                    if (displayedImage.width > 200 || displayedImage.height > 200 || displayedImage.width < 200  || displayedImage.height < 200) {
+                    const width = displayedImage.width;
+                    const height = displayedImage.height;
+
+                    // Boyutları kontrol et ve gerekirse düzenle
+                    if (width > 200 || height > 200) {
                         displayedImage.style.width = "200px";
                         displayedImage.style.height = "200px";
+                    } else {
+                        displayedImage.style.width = width + "px";
+                        displayedImage.style.height = height + "px";
                     }
                 };
             };
@@ -69,7 +76,7 @@ Load Image From File:  <input type="file" accept="image/*" id="imageInput" oncha
         if (displayedImage.getAttribute('src') === "default_image.jpg") {
             alert("Please select or load an image first.");
         } else {
-            // You can perform image processing operations using JavaScript here
+            // Image processing operations can be performed here using JavaScript
             // For simplicity, let's just display an alert
             alert("Characters found!");
         }
