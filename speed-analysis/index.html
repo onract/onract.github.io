@@ -1,8 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E7 Speed Analysis</title>
+    <style>
+        img {
+            max-width: 400px;
+            max-height: 400px;
+        }
+
+        #findButton {
+            width: 100px;
+            height: 100px;
+            font-size: 16px;
+        }
+    </style>
+</head>
 <body>
 
 <h1>E7 Speed Analysis</h1>
 
+<br>
+<img id="displayedImage" src="default_image.jpg" alt="Selected Image">
+<br>
+Load Image From File:  <input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
+<br>
+<br>
+
+<br>
+<button id="findButton" onclick="findCharacters()">Find Characters</button>
+
+<script>
+    let imageInput = document.getElementById('imageInput');
+    let displayedImage = document.getElementById('displayedImage');
+
+    // Display default image on page load
+    window.onload = function () {
+        displayedImage.src = "default_image.jpg";
+    };
+
+    function loadImage() {
+        const file = imageInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                displayedImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+
+    function findCharacters() {
+        if (displayedImage.getAttribute('src') === "default_image.jpg") {
+            alert("Please select or load an image first.");
+        } else {
+            // You can perform image processing operations using JavaScript here
+            // For simplicity, let's just display an alert
+            alert("Characters found!");
+        }
+    }
+</script>
+
 </body>
-</html> 
+</html>
