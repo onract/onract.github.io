@@ -1,8 +1,54 @@
- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing Web App</title>
+</head>
 <body>
 
 <h1>E7 Speed Analysis</h1>
 
+<input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
+<br>
+<img id="displayedImage" alt="Selected Image">
+<br>
+<button onclick="findSandclocks()">Find Sandclock</button>
+
+<script>
+    let image;
+
+    function loadImage() {
+        const input = document.getElementById('imageInput');
+        const displayedImage = document.getElementById('displayedImage');
+
+        const file = input.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                image = new Image();
+                image.src = e.target.result;
+
+                image.onload = function () {
+                    displayedImage.src = image.src;
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function findSandclocks() {
+        if (image) {
+            // You can perform image processing operations using JavaScript here
+            // For simplicity, let's just display an alert
+            alert("Sandclocks found!");
+        } else {
+            alert("Please select an image first.");
+        }
+    }
+</script>
+
 </body>
-</html> 
+</html>
