@@ -6,8 +6,12 @@
     <title>E7 Speed Analysis</title>
     <style>
         img {
-            max-width: 400px;
-            max-height: 400px;
+            max-width: 200px;
+            max-height: 200px;
+            width: auto; /* Resmin oranına uygun olarak genişlik ayarla */
+            height: auto; /* Resmin oranına uygun olarak yükseklik ayarla */
+            display: block; /* Dikey hizalama sorunlarını çözmek için */
+            /* margin: auto; /* Resmi yatayda ortala */
         }
 
         #findButton {
@@ -47,12 +51,19 @@ Load Image From File:  <input type="file" accept="image/*" id="imageInput" oncha
             const reader = new FileReader();
             reader.onload = function (e) {
                 displayedImage.src = e.target.result;
+
+                // Kontrol için resmin boyutlarını güncelle
+                displayedImage.onload = function () {
+                    if (displayedImage.width > 200 || displayedImage.height > 200 || displayedImage.width < 200  || displayedImage.height < 200) {
+                        displayedImage.style.width = "200px";
+                        displayedImage.style.height = "200px";
+                    }
+                };
             };
 
             reader.readAsDataURL(file);
         }
     }
-
 
     function findCharacters() {
         if (displayedImage.getAttribute('src') === "default_image.jpg") {
