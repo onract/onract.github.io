@@ -10,25 +10,6 @@ body {
     height: 100vh;
 }
 
-.top-panel {
-    background-color: navy;
-    padding: 20px;
-    overflow: hidden;
-    white-space: nowrap;
-    top: 0; /* Üst panelin en üstte olması için */
-    left: 200px;
-    position: fixed; /* Üst panelin sabit durması için */
-    width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak top panelin genişliği hesaplanır */
-    height: 80px; /* Yükseklik ekranın bir kısmını kaplasın */
-    z-index: 999; /* Diğer içeriğin üzerine çıkması için */
-}
-
-.top-panel img {
-    width: 100px;
-    height: 40px;
-    margin-right: 10px;
-}
-
 .left-panel {
     position: fixed; /* Sol panelin sabit durması için */
     top: 0; /* Sol panelin en üstte olması için */
@@ -54,6 +35,26 @@ body {
 .contact-info p {
     margin: 5px 0;
 }
+
+.top-panel {
+    background-color: navy;
+    overflow: hidden;
+    white-space: nowrap;
+    position: fixed; /* Üst panelin sabit durması için */
+    top: 0; /* Üst panelin en üstte olması için */
+    bottom: 0; /* Sağ panelin en altta olması için */
+    left: 200px;
+    width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak top panelin genişliği hesaplanır */
+    height: 80px; /* Yükseklik ekranın bir kısmını kaplasın */
+    z-index: 999; /* Diğer içeriğin üzerine çıkması için */
+}
+
+.top-panel img {
+    width: 100px;
+    height: 40px;
+    margin-right: 10px;
+}
+
 
 .right-panel {
     position: fixed; /* Sağ panelin sabit durması için */
