@@ -11,10 +11,10 @@ body {
 }
 
 .left-panel {
-    position: fixed; /* Sol panelin sabit durması için */
-    top: 0; /* Sol panelin en üstte olması için */
-    bottom: 0; /* Sol panelin en altta olması için */
-    width: 200px; /* Sabit genişlik */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 200px;
     background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg');
     background-size: cover;
     overflow-y: auto;
@@ -40,13 +40,12 @@ body {
     background-color: navy;
     overflow: hidden;
     white-space: nowrap;
-    position: fixed; /* Üst panelin sabit durması için */
-    top: 0; /* Üst panelin en üstte olması için */
-    bottom: 0; /* Sağ panelin en altta olması için */
+    position: fixed;
+    top: 0;
     left: 200px;
-    width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak top panelin genişliği hesaplanır */
-    height: 80px; /* Yükseklik ekranın bir kısmını kaplasın */
-    z-index: 999; /* Diğer içeriğin üzerine çıkması için */
+    width: calc(100% - 200px);
+    height: 80px;
+    z-index: 999;
 }
 
 .top-panel img {
@@ -55,17 +54,16 @@ body {
     margin-right: 10px;
 }
 
-
 .right-panel {
-    position: fixed; /* Sağ panelin sabit durması için */
-    top: 150px; /* Sağ panelin en üstte olması için */
-    bottom: 0; /* Sağ panelin en altta olması için */
-    left: 200px; /* Sol panelin genişliği kadar sağa kaydır */
-    width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
-    height: calc(100% - 80px); /* Ekranın genişliğinden üst panelin yüksekliği çıkarılarak sağ panelin yüksekliği hesaplanır */
-    overflow-y: auto; /* Dikey kaydırma */
-    background-color: #333; /* Gri düz renk arka plan */
+    position: fixed;
+    top: 80px; /* Üst panele yapışık olacak şekilde güncellendi */
+    bottom: 0;
+    left: 200px;
+    width: calc(100% - 200px);
+    overflow-y: auto;
+    background-color: #333;
 }
+
 
 .work-list {
     list-style: none;
