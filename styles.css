@@ -46,20 +46,24 @@ body {
     width: calc(100% - 200px);
     height: 80px;
     z-index: 999;
+    display: flex;
+    align-items: center; /* Resimleri dikeyde ortalamak için */
 }
 
 .top-panel img {
     width: 100px;
     height: 40px;
-    margin-right: 10px;
+    margin-right: 20px; /* Resimler arasındaki boşluğu artırmak için */
 }
 
 .right-panel {
     position: fixed;
-    top: 80px; /* Üst panele yapışık olacak şekilde güncellendi */
+    top: 80px;
     bottom: 0;
     left: 200px;
     width: calc(100% - 200px);
+    height: calc(100% - 80px);
+
     overflow-y: auto;
     background-color: #333;
 }
