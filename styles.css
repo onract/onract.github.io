@@ -65,6 +65,7 @@ body {
     height: calc(100% - 80px);
     overflow-y: auto;
     background-color: #333;
+    margin-top: 0; /* Üst panel ile arasındaki boşluğu kaldır */
 }
 
 
