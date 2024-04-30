@@ -34,8 +34,29 @@ body {
 
 .right-panel {
     flex: 1; /* Sağ panelin genişliği */
-    background-image: url('right-panel-bg.jpg'); /* Sağ panelin arka plan resmi */
+    background-image: url('bg.jpg'); /* Sağ panelin arka plan resmi */
     background-size: cover;
     padding: 20px;
     overflow-y: auto; /* Dikey kaydırma */
+}
+
+.work-list {
+    list-style: none; /* Liste maddesi işaretlerini kaldır */
+    padding: 0; /* Liste içi boşlukları kaldır */
+}
+
+.work-item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.work-item img {
+    width: 100px; /* Çalışma resimlerinin boyutu */
+    height: 100px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.work-description {
+    flex: 1; /* Açıklama alanının sağa yayılmasını sağla */
 }
