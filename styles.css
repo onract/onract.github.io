@@ -10,7 +10,7 @@ body {
 }
 
 .left-panel {
-    flex: 0 0 200px; /* Sol panelin sabit genişliği */
+    flex: 0 0 300px; /* Sol panelin sabit genişliği */
     background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg'); /* Sol panelin arka plan resmi */
     background-size: cover;
     overflow-y: auto; /* Dikey kaydırma */
@@ -32,18 +32,15 @@ body {
     margin: 5px 0;
 }
 
-
 .right-panel {
     flex: 1; /* Sağ panelin genişliği */
     padding: 20px;
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
-    /* background-image: url('https://as2.ftcdn.net/v2/jpg/03/16/68/91/1000_F_316689113_Rer0gtcEbkvzUsN2qH3AhTWW5qnqzgKH.jpg'); /* Sağ panelin arka plan resmi */
-
 }
 
 .right-top {
-    background-color: #222; /* Çok koyu gri üst bölüm arka plan rengi */
+    background-color: navy; /* Koyu mavi üst bölüm arka plan rengi */
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -72,4 +69,3 @@ body {
 .work-description h3 {
     margin-top: 0; /* Başlık için üst boşluk kaldırıldı */
 }
-
