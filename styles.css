@@ -18,7 +18,7 @@ body {
     position: fixed; /* Üst panelin sabit durması için */
     top: 0; /* Üst panelin en üstte olması için */
     width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak top panelin genişliği hesaplanır */
-    height: 150px; /* Yükseklik ekranın bir kısmını kaplasın */
+    height: 80px; /* Yükseklik ekranın bir kısmını kaplasın */
     z-index: 999; /* Diğer içeriğin üzerine çıkması için */
 }
 
@@ -60,7 +60,7 @@ body {
     bottom: 0; /* Sağ panelin en altta olması için */
     left: 200px; /* Sol panelin genişliği kadar sağa kaydır */
     width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
-    height: calc(100% - 150px); /* Ekranın genişliğinden üst panelin yüksekliği çıkarılarak sağ panelin yüksekliği hesaplanır */
+    height: calc(100% - 80px); /* Ekranın genişliğinden üst panelin yüksekliği çıkarılarak sağ panelin yüksekliği hesaplanır */
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
 }
