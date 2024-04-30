@@ -60,7 +60,6 @@ body {
     bottom: 0; /* Sağ panelin en altta olması için */
     left: 200px; /* Sol panelin genişliği kadar sağa kaydır */
     width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
-    padding-top: 60px; /* Üst panelin yüksekliği kadar boşluk eklenir */
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
 }
