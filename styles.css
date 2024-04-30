@@ -32,17 +32,16 @@ body {
     margin: 5px 0;
 }
 
+.top-panel {
+    background-color: navy;
+    padding: 20px;
+}
+
 .right-panel {
     flex: 1; /* Sağ panelin genişliği */
     padding: 20px;
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
-}
-
-.right-top {
-    background-color: navy; /* Koyu mavi üst bölüm arka plan rengi */
-    padding: 20px;
-    margin-bottom: 20px;
 }
 
 .work-list {
