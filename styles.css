@@ -6,7 +6,13 @@ body {
 
 .container {
     display: flex;
+    flex-direction: column; /* Dikey düzen */
     height: 100vh;
+}
+
+.top-panel {
+    background-color: navy;
+    padding: 20px;
 }
 
 .left-panel {
@@ -30,16 +36,6 @@ body {
 
 .contact-info p {
     margin: 5px 0;
-}
-
-.top-panel {
-    flex: 0 0 0 100px; /* Sol panelin sabit genişliği */
-    background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg'); /* Sol panelin arka plan resmi */
-    background-size: cover;
-    overflow-y: auto; /* Dikey kaydırma */
-    
-    background-color: navy;
-    padding: 20px;
 }
 
 .right-panel {
