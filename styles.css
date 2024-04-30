@@ -15,9 +15,9 @@ body {
     padding: 20px;
     overflow: hidden;
     white-space: nowrap;
-    position: fixed; /* Üst panelin sabit durması için */
     top: 0; /* Üst panelin en üstte olması için */
     left: 200px;
+    position: fixed; /* Üst panelin sabit durması için */
     width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak top panelin genişliği hesaplanır */
     height: 80px; /* Yükseklik ekranın bir kısmını kaplasın */
     z-index: 999; /* Diğer içeriğin üzerine çıkması için */
