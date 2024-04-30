@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+}
+
+.profile {
+    width: 30%;
+    padding: 20px;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.contact-info {
+    margin-top: 20px;
+}
+
+.works {
+    width: 70%;
+    padding: 20px;
+}
+
+.work-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.work-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.work-item img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.work-description {
+    flex-grow: 1;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .profile,
+    .works {
+        width: 100%;
+    }
+}
