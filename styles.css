@@ -14,10 +14,6 @@ body {
     background-image: url('https://as2.ftcdn.net/v2/jpg/03/16/68/91/1000_F_316689113_Rer0gtcEbkvzUsN2qH3AhTWW5qnqzgKH.jpg'); /* Sol panelin arka plan resmi */
     background-size: cover;
     overflow-y: auto; /* Dikey kaydırma */
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
 }
 
 .profile {
@@ -42,5 +38,4 @@ body {
     background-size: cover;
     padding: 20px;
     overflow-y: auto; /* Dikey kaydırma */
-    margin-left: 300px; /* Sol panelin genişliği kadar sağa kaydır */
 }
