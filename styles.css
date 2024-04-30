@@ -59,14 +59,14 @@ body {
     bottom: 0; /* Sağ panelin en altta olması için */
     left: 300px; /* Sol panelin genişliği kadar sağa kaydır */
     width: calc(100% - 300px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
-    padding: 20px;
+    padding-top: 60px; /* Üst panelin yüksekliği kadar boşluk eklenir */
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
 }
 
 .work-list {
     list-style: none;
-    padding: 0;
+    padding: 20px;
 }
 
 .work-item {
