@@ -11,7 +11,7 @@ body {
 
 .left-panel {
     flex: 0 0 300px; /* Sol panelin sabit genişliği */
-    background-image: url('left-panel-bg.jpg'); /* Sol panelin arka plan resmi */
+    background-image: url('https://as2.ftcdn.net/v2/jpg/03/16/68/91/1000_F_316689113_Rer0gtcEbkvzUsN2qH3AhTWW5qnqzgKH.jpg'); /* Sol panelin arka plan resmi */
     background-size: cover;
     overflow-y: auto; /* Dikey kaydırma */
     position: fixed;
