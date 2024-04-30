@@ -40,7 +40,7 @@ body {
 
 .right-panel {
     flex: 1; /* Sağ panelin genişliği */
-    padding: 20px;
+    padding: 0px;
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
 }
