@@ -42,4 +42,5 @@ body {
     background-size: cover;
     padding: 20px;
     overflow-y: auto; /* Dikey kaydırma */
+    margin-left: 300px; /* Sol panelin genişliği kadar sağa kaydır */
 }
