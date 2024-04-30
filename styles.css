@@ -32,11 +32,20 @@ body {
     margin: 5px 0;
 }
 
+
 .right-panel {
-    background-image: url('https://as2.ftcdn.net/v2/jpg/03/16/68/91/1000_F_316689113_Rer0gtcEbkvzUsN2qH3AhTWW5qnqzgKH.jpg'); /* Sağ panelin arka plan resmi */
-    background-size: cover;
+    flex: 1; /* Sağ panelin genişliği */
     padding: 20px;
     overflow-y: auto; /* Dikey kaydırma */
+    background-color: #333; /* Gri düz renk arka plan */
+    /* background-image: url('https://as2.ftcdn.net/v2/jpg/03/16/68/91/1000_F_316689113_Rer0gtcEbkvzUsN2qH3AhTWW5qnqzgKH.jpg'); /* Sağ panelin arka plan resmi */
+
+}
+
+.right-top {
+    background-color: #222; /* Çok koyu gri üst bölüm arka plan rengi */
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .work-list {
