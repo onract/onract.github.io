@@ -44,7 +44,6 @@ body {
     top: 0;
     left: 200px;
     width: calc(100% - 200px);
-    height: 80px;
     z-index: 999;
     display: flex;
     align-items: center; /* Resimleri dikeyde ortalamak için */
