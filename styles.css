@@ -17,7 +17,7 @@ body {
     white-space: nowrap;
     position: fixed; /* Üst panelin sabit durması için */
     top: 0; /* Üst panelin en üstte olması için */
-    width: 100%; /* Genişlik tüm ekranı kaplasın */
+    width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak top panelin genişliği hesaplanır */
     height: 150px; /* Yükseklik ekranın bir kısmını kaplasın */
     z-index: 999; /* Diğer içeriğin üzerine çıkması için */
 }
@@ -56,10 +56,11 @@ body {
 
 .right-panel {
     position: fixed; /* Sağ panelin sabit durması için */
-    top: 0; /* Sağ panelin en üstte olması için */
+    top: 150px; /* Sağ panelin en üstte olması için */
     bottom: 0; /* Sağ panelin en altta olması için */
     left: 200px; /* Sol panelin genişliği kadar sağa kaydır */
     width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
+    height: calc(100% - 150px); /* Ekranın genişliğinden üst panelin yüksekliği çıkarılarak sağ panelin yüksekliği hesaplanır */
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
 }
