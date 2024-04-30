@@ -53,7 +53,7 @@ body {
 .top-panel img {
     width: 100px;
     height: 40px;
-    margin-right: 20px; /* Resimler arasındaki boşluğu artırmak için */
+    margin-left: 20px; /* Resimler arasındaki boşluğu artırmak için */
 }
 
 .right-panel {
