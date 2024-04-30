@@ -54,10 +54,14 @@ body {
 }
 
 .right-panel {
-    margin-left: 300px; /* Sol panelin genişliği kadar sağa kaydır */
-    /*padding: 20px;*/
-    overflow-y: auto;
-    background-color: #333;
+    position: fixed; /* Sağ panelin sabit durması için */
+    top: 0; /* Sağ panelin en üstte olması için */
+    bottom: 0; /* Sağ panelin en altta olması için */
+    left: 300px; /* Sol panelin genişliği kadar sağa kaydır */
+    width: calc(100% - 300px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
+    padding: 20px;
+    overflow-y: auto; /* Dikey kaydırma */
+    background-color: #333; /* Gri düz renk arka plan */
 }
 
 .work-list {
