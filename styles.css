@@ -33,7 +33,6 @@ body {
 }
 
 .right-panel {
-    flex: 1; /* Sağ panelin genişliği */
     background-image: url('https://as1.ftcdn.net/v2/jpg/02/96/49/72/1000_F_296497204_DdDdisVG4BKMv5FZPNU6nFdkJ9pJ2qm5.jpg'); /* Sağ panelin arka plan resmi */
     background-size: cover;
     padding: 20px;
@@ -51,8 +50,8 @@ body {
 }
 
 .work-item img {
-    width: 100px; /* Çalışma resimlerinin boyutu */
-    height: 100px;
+    width: 80px; /* Çalışma resimlerinin boyutu küçültüldü */
+    height: 80px;
     border-radius: 5px;
     margin-right: 20px;
 }
@@ -60,3 +59,8 @@ body {
 .work-description {
     flex: 1; /* Açıklama alanının sağa yayılmasını sağla */
 }
+
+.work-description h3 {
+    margin-top: 0; /* Başlık için üst boşluk kaldırıldı */
+}
+
