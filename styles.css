@@ -34,7 +34,7 @@ body {
 
 .right-panel {
     flex: 1; /* Sağ panelin genişliği */
-    background-image: url('bg.jpg'); /* Sağ panelin arka plan resmi */
+    background-image: url('https://as1.ftcdn.net/v2/jpg/02/96/49/72/1000_F_296497204_DdDdisVG4BKMv5FZPNU6nFdkJ9pJ2qm5.jpg'); /* Sağ panelin arka plan resmi */
     background-size: cover;
     padding: 20px;
     overflow-y: auto; /* Dikey kaydırma */
