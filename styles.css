@@ -6,28 +6,33 @@ body {
 
 .container {
     display: flex;
-    flex-direction: column; /* Dikey düzen */
+    flex-direction: column;
     height: 100vh;
 }
 
 .top-panel {
     background-color: navy;
     padding: 20px;
-    overflow: hidden; /* İçerik taşmasını engelle */
-    white-space: nowrap; /* İçeriği satırbaşı yapmadan sıkıştır */
+    overflow: hidden;
+    white-space: nowrap;
+    position: fixed; /* Üst panelin sabit durması için */
+    top: 0; /* Üst panelin en üstte olması için */
+    width: 100%; /* Genişlik tüm ekranı kaplasın */
+    z-index: 999; /* Diğer içeriğin üzerine çıkması için */
 }
 
 .top-panel img {
-    width: 80px; /* Resim genişliği */
-    height: 50px; /* Resim yüksekliği */
-    margin-right: 10px; /* Resimler arası boşluk */
+    width: 80px;
+    height: 50px;
+    margin-right: 10px;
 }
 
 .left-panel {
-    flex: 0 0 300px; /* Sol panelin sabit genişliği */
-    background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg'); /* Sol panelin arka plan resmi */
+    flex: 0 0 300px;
+    background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg');
     background-size: cover;
-    overflow-y: auto; /* Dikey kaydırma */
+    overflow-y: auto;
+    margin-right: 100px; /* Sağ panelin sol kenarı ile arasında boşluk bırakmak için */
 }
 
 .profile {
@@ -47,15 +52,15 @@ body {
 }
 
 .right-panel {
-    flex: 1; /* Sağ panelin genişliği */
+    flex: 1;
     padding: 20px;
-    overflow-y: auto; /* Dikey kaydırma */
-    background-color: #333; /* Gri düz renk arka plan */
+    overflow-y: auto;
+    background-color: #333;
 }
 
 .work-list {
-    list-style: none; /* Liste maddesi işaretlerini kaldır */
-    padding: 0; /* Liste içi boşlukları kaldır */
+    list-style: none;
+    padding: 0;
 }
 
 .work-item {
@@ -64,16 +69,16 @@ body {
 }
 
 .work-item img {
-    width: 80px; /* Çalışma resimlerinin boyutu küçültüldü */
+    width: 80px;
     height: 80px;
     border-radius: 5px;
     margin-right: 20px;
 }
 
 .work-description {
-    flex: 1; /* Açıklama alanının sağa yayılmasını sağla */
+    flex: 1;
 }
 
 .work-description h3 {
-    margin-top: 0; /* Başlık için üst boşluk kaldırıldı */
+    margin-top: 0;
 }
