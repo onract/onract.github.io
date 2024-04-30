@@ -13,18 +13,16 @@ body {
 .top-panel {
     background-color: navy;
     padding: 20px;
-}
-.panel-item {
-    display: flex;
-    margin-bottom: 20px;
+    overflow: hidden; /* İçerik taşmasını engelle */
+    white-space: nowrap; /* İçeriği satırbaşı yapmadan sıkıştır */
 }
 
-.panel-item img {
-    width: 80px; /* Panel resimlerinin boyutu küçültüldü */
-    height: 80px;
-    border-radius: 5px;
-    margin-right: 20px;
+.top-panel img {
+    width: 80px; /* Resim genişliği */
+    height: 50px; /* Resim yüksekliği */
+    margin-right: 10px; /* Resimler arası boşluk */
 }
+
 .left-panel {
     flex: 0 0 300px; /* Sol panelin sabit genişliği */
     background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg'); /* Sol panelin arka plan resmi */
