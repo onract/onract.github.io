@@ -53,7 +53,7 @@ body {
 .top-panel img {
     width: 100px;
     height: 40px;
-    margin: 20px; /* Resimler arasındaki boşluğu artırmak için */
+    margin-right: 20px; /* Resimler arasındaki boşluğu artırmak için */
 }
 
 .right-panel {
@@ -62,6 +62,7 @@ body {
     bottom: 0;
     left: 200px;
     width: calc(100% - 200px);
+    height: calc(100% - 80px);
     overflow-y: auto;
     background-color: #333;
     margin-top: 0; /* Üst panel ile arasındaki boşluğu kaldır */
