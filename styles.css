@@ -44,6 +44,7 @@ body {
     top: 0;
     left: 200px;
     width: calc(100% - 200px);
+    height: 80px;
     z-index: 999;
     display: flex;
     align-items: center; /* Resimleri dikeyde ortalamak için */
@@ -52,7 +53,7 @@ body {
 .top-panel img {
     width: 100px;
     height: 40px;
-    margin-right: 20px; /* Resimler arasındaki boşluğu artırmak için */
+    margin: 20px; /* Resimler arasındaki boşluğu artırmak için */
 }
 
 .right-panel {
