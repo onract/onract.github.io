@@ -18,7 +18,7 @@ body {
     position: fixed; /* Üst panelin sabit durması için */
     top: 0; /* Üst panelin en üstte olması için */
     width: 100%; /* Genişlik tüm ekranı kaplasın */
-    height: 20%; /* Yükseklik ekranın bir kısmını kaplasın */
+    height: 150px; /* Yükseklik ekranın bir kısmını kaplasın */
     z-index: 999; /* Diğer içeriğin üzerine çıkması için */
 }
 
@@ -32,7 +32,7 @@ body {
     position: fixed; /* Sol panelin sabit durması için */
     top: 0; /* Sol panelin en üstte olması için */
     bottom: 0; /* Sol panelin en altta olması için */
-    width: 300px; /* Sabit genişlik */
+    width: 200px; /* Sabit genişlik */
     background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg');
     background-size: cover;
     overflow-y: auto;
@@ -58,8 +58,8 @@ body {
     position: fixed; /* Sağ panelin sabit durması için */
     top: 0; /* Sağ panelin en üstte olması için */
     bottom: 0; /* Sağ panelin en altta olması için */
-    left: 300px; /* Sol panelin genişliği kadar sağa kaydır */
-    width: calc(100% - 300px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
+    left: 200px; /* Sol panelin genişliği kadar sağa kaydır */
+    width: calc(100% - 200px); /* Ekranın genişliğinden sol panelin genişliği çıkarılarak sağ panelin genişliği hesaplanır */
     padding-top: 60px; /* Üst panelin yüksekliği kadar boşluk eklenir */
     overflow-y: auto; /* Dikey kaydırma */
     background-color: #333; /* Gri düz renk arka plan */
