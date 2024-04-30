@@ -57,7 +57,7 @@ body {
 
 .right-panel {
     position: fixed;
-    top: 0; /* Üst panelin yüksekliği kadar aşağıda başlat */
+    top: 80; /* Üst panelin yüksekliği kadar aşağıda başlat */
     bottom: 0;
     left: 200px;
     width: calc(100% - 200px);
