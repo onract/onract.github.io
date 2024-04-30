@@ -2,22 +2,27 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-image: url('bg.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    color: #fff;
 }
 
 .container {
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
+}
+
+.left-panel {
+    flex: 0 0 300px; /* Sol panelin sabit genişliği */
+    background-image: url('left-panel-bg.jpg'); /* Sol panelin arka plan resmi */
+    background-size: cover;
+    overflow-y: auto; /* Dikey kaydırma */
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
 
 .profile {
     text-align: center;
-    margin-right: 50px;
+    padding: 20px;
 }
 
 .profile img {
@@ -31,31 +36,10 @@ body {
     margin: 5px 0;
 }
 
-.works {
-    text-align: center;
-}
-
-.work-list {
-    list-style: none;
-    padding: 0;
-}
-
-.work-item {
-    margin-bottom: 20px;
-}
-
-.work-item img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-}
-
-.work-description {
-    text-align: left;
-}
-
-/* Hover effect for work items */
-.work-item img:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
+.right-panel {
+    flex: 1; /* Sağ panelin genişliği */
+    background-image: url('right-panel-bg.jpg'); /* Sağ panelin arka plan resmi */
+    background-size: cover;
+    padding: 20px;
+    overflow-y: auto; /* Dikey kaydırma */
 }
