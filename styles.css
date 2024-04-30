@@ -18,6 +18,7 @@ body {
     position: fixed; /* Üst panelin sabit durması için */
     top: 0; /* Üst panelin en üstte olması için */
     width: 100%; /* Genişlik tüm ekranı kaplasın */
+    height: 20%; /* Yükseklik ekranın bir kısmını kaplasın */
     z-index: 999; /* Diğer içeriğin üzerine çıkması için */
 }
 
