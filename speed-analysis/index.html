@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E7 Speed Analysis</title>
+    <title>E7 Speed Analysis v0.03</title>
     <style>
-        img {
-            max-width: 300px;
-            max-height: 300px;
-            width: auto;
-            height: auto;
+        .image-container {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
             display: block;
         }
 
@@ -24,19 +32,8 @@
             gap: 20px;
         }
 
-        .image-container {
-            width: 300px;
-            height: 300px;
-            border: 1px solid #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f0f0;
-        }
-
-        .image-container img {
-            max-width: 100%;
-            max-height: 100%;
+        h3 {
+            text-align: center;
         }
     </style>
 </head>
@@ -45,13 +42,17 @@
 <h1>E7 Speed Analysis</h1>
 
 <div id="images">
-    <div class="image-container">
+    <div>
         <h3>Input Image</h3>
-        <img id="inputImage" src="default_image.jpg" alt="Input Image">
+        <div class="image-container">
+            <img id="inputImage" src="default_image.jpg" alt="Input Image">
+        </div>
     </div>
-    <div class="image-container">
-        <h3>Result Image</h3>
-        <img id="resultImage" src="default_image.jpg" alt="Result Image">
+    <div>
+        <h3>Inference Results</h3>
+        <div class="image-container">
+            <img id="resultImage" src="default_image.jpg" alt="Result Image">
+        </div>
     </div>
 </div>
 
