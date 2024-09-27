@@ -98,8 +98,7 @@ body {
 }
 .work-item.clicked {
     background-color: lightgray; /* Highlight clicked item */
-    color: white; /* Change text color if desired */
-    /* Add additional styles as needed */
+
 }
 
 .work-item img {
