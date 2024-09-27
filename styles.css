@@ -25,6 +25,9 @@ body {
 
 .profile {
     text-align: center;
+    color: #fff; /* Text color */
+    text-shadow: 1px 1px 0 #000, /* Shadow for 3D effect */
+                 2px 2px 0 #666;
     padding: 20px;
 }
 
