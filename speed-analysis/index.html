@@ -87,8 +87,8 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
 
     // Display default image on page load
     window.onload = function () {
-        inputImage.src = "default_image.jpg";
-        resultImage.src = "default_image.jpg";
+        inputImage.src = "default_image.png";
+        resultImage.src = "default_image.png";
     };
 
     function loadImage() {
@@ -105,7 +105,7 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
     }
 
     function findCharacters() {
-        if (inputImage.getAttribute('src') === "default_image.jpg") {
+        if (inputImage.getAttribute('src') === "default_image.png") {
             alert("Please upload an image first."); // Please select or load an image first.
             return;
         }
