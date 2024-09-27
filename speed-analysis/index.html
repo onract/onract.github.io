@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E7 Speed Analysis v1.00</title>
+    <title>E7 Speed Analysis v1.01</title>
     <style>
         img {
             max-width: 300px;
@@ -19,9 +19,9 @@
             font-size: 16px;
         }
 
-        #result {
-            margin-top: 20px;
-            font-size: 14px;
+        #images {
+            display: flex;
+            gap: 20px;
         }
     </style>
 </head>
@@ -29,26 +29,32 @@
 
 <h1>E7 Speed Analysis</h1>
 
-<br>
-<img id="displayedImage" src="default_image.jpg" alt="Selected Image">
-<br>
-Load Image From File:  <input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
-<br>
-<br>
+<div id="images">
+    <div>
+        <h3>Input Image</h3>
+        <img id="inputImage" src="default_image.jpg" alt="Input Image">
+    </div>
+    <div>
+        <h3>Result Image</h3>
+        <img id="resultImage" src="default_image.jpg" alt="Result Image">
+    </div>
+</div>
 
 <br>
+Load Image From File: <input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
+<br><br>
+
 <button id="findButton" onclick="findCharacters()">Find Characters</button>
-
-<div id="result"></div>
 
 <script>
     let imageInput = document.getElementById('imageInput');
-    let displayedImage = document.getElementById('displayedImage');
-    let resultDiv = document.getElementById('result');
+    let inputImage = document.getElementById('inputImage');
+    let resultImage = document.getElementById('resultImage');
 
     // Display default image on page load
     window.onload = function () {
-        displayedImage.src = "default_image.jpg";
+        inputImage.src = "default_image.jpg";
+        resultImage.src = "default_image.jpg";
     };
 
     function loadImage() {
@@ -57,66 +63,59 @@ Load Image From File:  <input type="file" accept="image/*" id="imageInput" oncha
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                // Yeni resmi önizleme için geçici bir görüntü olarak kullan
-                displayedImage.src = e.target.result;
+                // Display the uploaded image in the input image element
+                inputImage.src = e.target.result;
 
-                // Yüklenen resmin boyutlarını kontrol et
-                displayedImage.onload = function () {
-                    const width = displayedImage.width;
-                    const height = displayedImage.height;
-
-                    // Boyutları kontrol et ve gerekirse düzenle
+                // Adjust dimensions if needed
+                inputImage.onload = function () {
+                    const width = inputImage.width;
+                    const height = inputImage.height;
                     if ((width != 300) || (height != 300)) {
-                        displayedImage.style.width = "300px";
-                        displayedImage.style.height = "300px";
+                        inputImage.style.width = "300px";
+                        inputImage.style.height = "300px";
                     } else {
-                        displayedImage.style.width = width + "px";
-                        displayedImage.style.height = height + "px";
+                        inputImage.style.width = width + "px";
+                        inputImage.style.height = height + "px";
                     }
                 };
             };
-
             reader.readAsDataURL(file);
         }
     }
 
     function findCharacters() {
-        if (displayedImage.getAttribute('src') === "default_image.jpg") {
+        if (inputImage.getAttribute('src') === "default_image.jpg") {
             alert("Please select or load an image first.");
-        } else {
-            const file = imageInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onloadend = function () {
-                    const base64Image = reader.result.split(',')[1];
-
-                    // Call the Roboflow API
-                    const apiUrl = "https://detect.roboflow.com/e7_character_combat/1";
-                    const apiKey = "AGVpfz4xEx87AziG2odL";
-
-                    fetch(`${apiUrl}?api_key=${apiKey}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: base64Image,
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Display results in the resultDiv
-                        resultDiv.innerHTML = `
-                            <h2>Inference Results</h2>
-                            <pre>${JSON.stringify(data, null, 2)}</pre>
-                        `;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                };
-
-                reader.readAsDataURL(file);
-            }
+            return;
         }
+
+        // Convert the input image to base64
+        const imgSrc = inputImage.getAttribute('src');
+        const base64Image = imgSrc.split(',')[1];
+
+        // Call the API with the base64 image
+        const apiUrl = "https://detect.roboflow.com/e7_character_combat/1";
+        const apiKey = "AGVpfz4xEx87AziG2odL";
+
+        fetch(`${apiUrl}?api_key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: base64Image,
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the result image with the returned image (if any)
+            if (data.predictions && data.image) {
+                resultImage.src = data.image;  // Assuming the API returns a processed image URL
+            } else {
+                alert('No characters found or no image returned!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 </script>
 
