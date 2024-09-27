@@ -68,7 +68,14 @@ body {
     margin-top: 0; /* Üst panel ile arasındaki boşluğu kaldır */
 }
 
-
+.right-panel h2 {
+    text-align: center; /* Center the text */
+    font-size: 2.5em; /* Increase font size */
+    color: #fff; /* Text color */
+    text-shadow: 1px 1px 0 #000, /* Shadow for 3D effect */
+                 2px 2px 0 #666;
+    margin-bottom: 20px; /* Space below the heading */
+}
 .work-list {
     list-style: none;
     padding: 20px;
