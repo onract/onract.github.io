@@ -87,10 +87,17 @@ body {
     list-style: none;
     padding: 20px;
 }
-
 .work-item {
     display: flex;
     margin-bottom: 20px;
+    color: #fff; /* Default text color */
+    text-shadow: 1px 1px 0 #000, /* Shadow for 3D effect */
+                 2px 2px 0 #666;
+    cursor: pointer; /* Show pointer on hover */
+    transition: color 0.3s; /* Smooth color transition */
+}
+.work-item.clicked {
+    color: lightgray; /* Color when clicked */
 }
 
 .work-item img {
