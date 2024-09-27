@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E7 Speed Analysis v1.01</title>
+    <title>E7 Speed Analysis</title>
     <style>
         img {
             max-width: 300px;
             max-height: 300px;
-            width: 300px;
-            height: 300px;
+            width: auto;
+            height: auto;
             display: block;
         }
 
@@ -23,6 +23,21 @@
             display: flex;
             gap: 20px;
         }
+
+        .image-container {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -30,11 +45,11 @@
 <h1>E7 Speed Analysis</h1>
 
 <div id="images">
-    <div>
+    <div class="image-container">
         <h3>Input Image</h3>
         <img id="inputImage" src="default_image.jpg" alt="Input Image">
     </div>
-    <div>
+    <div class="image-container">
         <h3>Result Image</h3>
         <img id="resultImage" src="default_image.jpg" alt="Result Image">
     </div>
@@ -65,19 +80,6 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
             reader.onload = function (e) {
                 // Display the uploaded image in the input image element
                 inputImage.src = e.target.result;
-
-                // Adjust dimensions if needed
-                inputImage.onload = function () {
-                    const width = inputImage.width;
-                    const height = inputImage.height;
-                    if ((width != 300) || (height != 300)) {
-                        inputImage.style.width = "300px";
-                        inputImage.style.height = "300px";
-                    } else {
-                        inputImage.style.width = width + "px";
-                        inputImage.style.height = height + "px";
-                    }
-                };
             };
             reader.readAsDataURL(file);
         }
