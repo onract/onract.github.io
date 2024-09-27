@@ -79,9 +79,7 @@
 Load Image From File: <input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
 <br><br>
 
-<!-- API URL and Key input -->
-API URL: <input type="text" id="apiUrl" placeholder="Enter API URL">
-<br><br>
+<!-- API Key input -->
 API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 <br><br>
 
@@ -101,6 +99,8 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
     let resultImage = document.getElementById('resultImage');
     let resultText = document.getElementById('resultText');
     let statusMessage = document.getElementById('statusMessage');
+
+    const apiUrl = "https://detect.roboflow.com/e7_character_combat/1"; // Fixed API URL
 
     // Display default image on page load
     window.onload = function () {
@@ -129,12 +129,11 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
             return;
         }
 
-        // Get API URL and Key from user input
-        const apiUrlInput = document.getElementById('apiUrl').value;
+        // Get API Key from user input
         const apiKeyInput = document.getElementById('apiKey').value;
 
-        if (!apiUrlInput || !apiKeyInput) {
-            alert("Please provide both API URL and API Key.");
+        if (!apiKeyInput) {
+            alert("Please provide an API Key.");
             return;
         }
 
@@ -146,7 +145,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
         const base64Image = imgSrc.split(',')[1];
 
         // Call the API with the base64 image
-        fetch(`${apiUrlInput}?api_key=${apiKeyInput}&format=image`, {
+        fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -172,7 +171,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
         });
 
         // Fetch and display the JSON result
-        fetch(`${apiUrlInput}?api_key=${apiKeyInput}`, {
+        fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
