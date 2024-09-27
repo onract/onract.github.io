@@ -15,7 +15,10 @@ body {
     top: 0;
     bottom: 0;
     width: 200px;
+    background-color: #111;
+    /* 
     background-image: url('https://raw.githubusercontent.com/onract/onract.github.io/main/bg.jpg');
+    */
     background-size: cover;
     overflow-y: auto;
 }
@@ -47,25 +50,26 @@ body {
     height: 80px;
     z-index: 999;
     display: flex;
-    align-items: center; /* Resimleri dikeyde ortalamak için */
+    align-items: center; /* To vertically center images */
 }
 
 .top-panel img {
     width: 100px;
     height: 40px;
-    margin-right: 20px; /* Resimler arasındaki boşluğu artırmak için */
+    margin-right: 20px; /* To increase the space between images */
+
 }
 
 .right-panel {
     position: fixed;
-    top: 80px; /* Üst panelin yüksekliği kadar aşağıda başlat */
+    top: 80px; /* Start as low as the height of the top panel */
     bottom: 0;
     left: 200px;
     width: calc(100% - 200px);
     height: calc(100% - 80px);
     overflow-y: auto;
     background-color: #333;
-    margin-top: 0; /* Üst panel ile arasındaki boşluğu kaldır */
+    margin-top: 0; /* Remove space between top panel */
 }
 
 .right-panel h2 {
