@@ -79,6 +79,12 @@
 Load Image From File: <input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
 <br><br>
 
+<!-- API URL and Key input -->
+API URL: <input type="text" id="apiUrl" placeholder="Enter API URL">
+<br><br>
+API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
+<br><br>
+
 <button id="findButton" onclick="findCharacters()">Find Characters</button>
 
 <!-- Status Message Area -->
@@ -123,6 +129,15 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
             return;
         }
 
+        // Get API URL and Key from user input
+        const apiUrlInput = document.getElementById('apiUrl').value;
+        const apiKeyInput = document.getElementById('apiKey').value;
+
+        if (!apiUrlInput || !apiKeyInput) {
+            alert("Please provide both API URL and API Key.");
+            return;
+        }
+
         // Set status to uploading image
         statusMessage.innerText = 'Uploading image...';
 
@@ -130,11 +145,8 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
         const imgSrc = inputImage.getAttribute('src');
         const base64Image = imgSrc.split(',')[1];
 
-        const apiUrl = "https://detect.roboflow.com/e7_character_combat/1";
-        const apiKey = "AGVpfz4xEx87AziG2odL";
-
         // Call the API with the base64 image
-        fetch(`${apiUrl}?api_key=${apiKey}&format=image`, {
+        fetch(`${apiUrlInput}?api_key=${apiKeyInput}&format=image`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -160,7 +172,7 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
         });
 
         // Fetch and display the JSON result
-        fetch(`${apiUrl}?api_key=${apiKey}`, {
+        fetch(`${apiUrlInput}?api_key=${apiKeyInput}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
