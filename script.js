@@ -1,1 +1,7 @@
-// JavaScript dosyası şu anda boş, ancak ileride gerektiğinde buraya fonksiyonlar eklenebilir.
+<script>
+    document.querySelectorAll('.work-item').forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('clicked'); // Toggle clicked class
+        });
+    });
+</script>
