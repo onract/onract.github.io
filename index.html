@@ -25,7 +25,7 @@
     <div class="container">
         <div class="left-panel">
             <div class="profile">
-                <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Profile Picture"> <!-- Profile Image -->
+                <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Profile Picture">
                 <div class="contact-info">
                     <p>Discord: racton</p>
                     <!--
@@ -48,7 +48,7 @@
             <h2>Works</h2>
             <ul class="work-list">
                 <li class="work-item">
-                    <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="EpicSeven - Character and Combat Detect"> <!-- Work Image 1 -->
+                    <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="EpicSeven - Character and Combat Detect">
                     <div class="work-description">
                         <h3><a href="speed-analysis/index.html">EpicSeven - Character and Combat Detect</a></h3>
                         <p>Character detection and speed analysis via combat readiness list in Epic Seven matches.</p>
@@ -91,10 +91,17 @@
                     </div>
                 </li>
                 -->
-                <!-- Other works list -->
+                <!-- Other works list can be added here -->
             </ul>
         </div>
     </div>
-    <script src="script.js"></script> <!--Added the external JavaScript file -->
+    <script src="script.js"></script> <!-- Added the external JavaScript file -->
+    <script>
+        document.querySelectorAll('.work-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('clicked'); // Toggle clicked class
+            });
+        });
+    </script>
 </body>
 </html>
