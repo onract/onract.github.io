@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E7 Speed Analysis v0.04</title>
+    <title>E7 Speed Analysis v0.05</title>
     <style>
         .image-container {
             width: 400px;
@@ -37,6 +37,16 @@
             text-align: center;
             margin-bottom: 5px;
         }
+
+        #result {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
     </style>
 </head>
 <body>
@@ -45,13 +55,13 @@
 
 <div id="images">
     <div>
-        <h3>Giriş Resmi</h3> <!-- Input Image -->
+        <h3>Input Image</h3> <!-- Input Image -->
         <div class="image-container">
             <img id="inputImage" src="default_image.jpg" alt="Input Image">
         </div>
     </div>
     <div>
-        <h3>Sonuç Resmi</h3> <!-- Result Image -->
+        <h3>Result Image</h3> <!-- Result Image -->
         <div class="image-container">
             <img id="resultImage" src="default_image.jpg" alt="Result Image">
         </div>
@@ -64,10 +74,16 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
 
 <button id="findButton" onclick="findCharacters()">Find Characters</button>
 
+<div id="result">
+    <h2>Inference Results</h2>
+    <pre id="resultText"></pre>
+</div>
+
 <script>
     let imageInput = document.getElementById('imageInput');
     let inputImage = document.getElementById('inputImage');
     let resultImage = document.getElementById('resultImage');
+    let resultText = document.getElementById('resultText');
 
     // Display default image on page load
     window.onload = function () {
@@ -111,11 +127,14 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
         })
         .then(response => response.json())
         .then(data => {
-            // Update the result image with the returned image (if any)
-            if (data.predictions && data.image) {
-                resultImage.src = data.image;  // Assuming the API returns a processed image URL
+            // Display the JSON results
+            resultText.innerHTML = JSON.stringify(data, null, 2);
+
+            // If the API returns a processed image, update the result image
+            if (data.image) {
+                resultImage.src = data.image;
             } else {
-                alert('Karakterler bulunamadı veya resim dönmedi!'); // No characters found or no image returned!
+                alert('Resim işlenmedi.'); // Image not processed
             }
         })
         .catch(error => {
