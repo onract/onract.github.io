@@ -6,8 +6,8 @@
     <title>E7 Combat Detect</title>
     <style>
         .image-container {
-            width: 600px;
-            height: 600px;
+            width: 500px;
+            height: 500px;
             border: 1px solid #ccc;
             display: flex;
             align-items: center;
@@ -43,6 +43,13 @@
             font-size: 14px;
         }
 
+        #statusMessage {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: blue;
+        }
+
         pre {
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -74,6 +81,9 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
 
 <button id="findButton" onclick="findCharacters()">Find Characters</button>
 
+<!-- Status Message Area -->
+<div id="statusMessage"></div>
+
 <div id="result">
     <h2>Inference Results</h2>
     <pre id="resultText"></pre>
@@ -84,11 +94,13 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
     let inputImage = document.getElementById('inputImage');
     let resultImage = document.getElementById('resultImage');
     let resultText = document.getElementById('resultText');
+    let statusMessage = document.getElementById('statusMessage');
 
     // Display default image on page load
     window.onload = function () {
         inputImage.src = "default_image.png";
         resultImage.src = "default_image.png";
+        statusMessage.innerText = ''; // Clear status message on load
     };
 
     function loadImage() {
@@ -99,6 +111,7 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
             reader.onload = function (e) {
                 // Display the uploaded image in the input image element
                 inputImage.src = e.target.result;
+                statusMessage.innerText = 'Image loaded. Ready for detection.'; // Update status
             };
             reader.readAsDataURL(file);
         }
@@ -110,14 +123,17 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
             return;
         }
 
+        // Set status to uploading image
+        statusMessage.innerText = 'Uploading image...';
+
         // Convert the input image to base64
         const imgSrc = inputImage.getAttribute('src');
         const base64Image = imgSrc.split(',')[1];
 
-        // Call the API with the base64 image
         const apiUrl = "https://detect.roboflow.com/e7_character_combat/1";
         const apiKey = "AGVpfz4xEx87AziG2odL";
 
+        // Call the API with the base64 image
         fetch(`${apiUrl}?api_key=${apiKey}&format=image`, {
             method: 'POST',
             headers: {
@@ -125,15 +141,22 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
             },
             body: base64Image,
         })
-        .then(response => response.blob())
+        .then(response => {
+            // Update status to processing
+            statusMessage.innerText = 'Processing image...';
+
+            return response.blob();
+        })
         .then(blob => {
             // Create an object URL from the returned blob and set it as the source for the result image
             const objectURL = URL.createObjectURL(blob);
             resultImage.src = objectURL;
+            statusMessage.innerText = 'Detection completed. Displaying results...'; // Update status
         })
         .catch(error => {
             console.error('Error:', error);
             alert('An error occurred while processing the image.'); // An error occurred while processing the image.
+            statusMessage.innerText = 'Error occurred during image processing.'; // Update status
         });
 
         // Fetch and display the JSON result
@@ -150,6 +173,7 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
         })
         .catch(error => {
             console.error('Error:', error);
+            statusMessage.innerText = 'Error occurred while fetching the results.'; // Update status
         });
     }
 </script>
