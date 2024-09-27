@@ -97,7 +97,7 @@ body {
     transition: color 0.3s; /* Smooth color transition */
 }
 .work-item.clicked {
-    background-color: #fff; /* Highlight clicked item */
+    background-color: #aaa; /* Highlight clicked item */
     color: white; /* Change text color if desired */
     /* Add additional styles as needed */
 }
