@@ -96,10 +96,14 @@ body {
     cursor: pointer; /* Show pointer on hover */
     transition: color 0.3s; /* Smooth color transition */
 }
+.work-item a {
+    display: flex; /* Make the link a flex container */
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color */
+}
+
 .work-item.clicked {
-    background-color: #aaa; /* Highlight clicked item */
-    color: white; /* Change text color if desired */
-    /* Add additional styles as needed */
+    background-color: lightgray; /* Change background for clicked state */
 }
 
 .work-item img {
