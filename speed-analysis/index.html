@@ -18,6 +18,11 @@
             height: 100px;
             font-size: 16px;
         }
+
+        #result {
+            margin-top: 20px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -34,9 +39,12 @@ Load Image From File:  <input type="file" accept="image/*" id="imageInput" oncha
 <br>
 <button id="findButton" onclick="findCharacters()">Find Characters</button>
 
+<div id="result"></div>
+
 <script>
     let imageInput = document.getElementById('imageInput');
     let displayedImage = document.getElementById('displayedImage');
+    let resultDiv = document.getElementById('result');
 
     // Display default image on page load
     window.onload = function () {
@@ -76,9 +84,38 @@ Load Image From File:  <input type="file" accept="image/*" id="imageInput" oncha
         if (displayedImage.getAttribute('src') === "default_image.jpg") {
             alert("Please select or load an image first.");
         } else {
-            // Image processing operations can be performed here using JavaScript
-            // For simplicity, let's just display an alert
-            alert("Characters found!");
+            const file = imageInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    const base64Image = reader.result.split(',')[1];
+
+                    // Call the Roboflow API
+                    const apiUrl = "https://detect.roboflow.com/e7_character_combat/1";
+                    const apiKey = "AGVpfz4xEx87AziG2odL";
+
+                    fetch(`${apiUrl}?api_key=${apiKey}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: base64Image,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Display results in the resultDiv
+                        resultDiv.innerHTML = `
+                            <h2>Inference Results</h2>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        `;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            }
         }
     }
 </script>
