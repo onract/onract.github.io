@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E7 Speed Analysis v1.08</title>
+    <title>E7 Combat Detect</title>
     <style>
         .image-container {
             width: 400px;
@@ -16,15 +16,26 @@
             margin-bottom: 10px;
         }
 
-        .image-container canvas {
+        .image-container img {
             max-width: 100%;
             max-height: 100%;
+            display: block;
         }
 
         #findButton {
             width: 100px;
             height: 100px;
             font-size: 16px;
+        }
+
+        #images {
+            display: flex;
+            gap: 20px;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 5px;
         }
 
         #result {
@@ -40,14 +51,21 @@
 </head>
 <body>
 
-<h1>E7 Speed Analysis</h1>
+<h1>E7 Character & Combat Detect</h1>
 
-<div class="image-container">
-    <canvas id="inputCanvas" width="400" height="400"></canvas>
-</div>
-
-<div class="image-container">
-    <canvas id="resultCanvas" width="400" height="400"></canvas>
+<div id="images">
+    <div>
+        <h3>Input Image</h3> <!-- Input Image -->
+        <div class="image-container">
+            <img id="inputImage" src="default_image.jpg" alt="Input Image">
+        </div>
+    </div>
+    <div>
+        <h3>Output Image</h3> <!-- Result Image -->
+        <div class="image-container">
+            <img id="resultImage" src="default_image.jpg" alt="Result Image">
+        </div>
+    </div>
 </div>
 
 <br>
@@ -63,17 +81,14 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
 
 <script>
     let imageInput = document.getElementById('imageInput');
-    let inputCanvas = document.getElementById('inputCanvas');
-    let resultCanvas = document.getElementById('resultCanvas');
+    let inputImage = document.getElementById('inputImage');
+    let resultImage = document.getElementById('resultImage');
     let resultText = document.getElementById('resultText');
-
-    const inputCtx = inputCanvas.getContext('2d');
-    const resultCtx = resultCanvas.getContext('2d');
 
     // Display default image on page load
     window.onload = function () {
-        inputCtx.fillStyle = "#f0f0f0"; // Default background color
-        inputCtx.fillRect(0, 0, inputCanvas.width, inputCanvas.height);
+        inputImage.src = "default_image.jpg";
+        resultImage.src = "default_image.jpg";
     };
 
     function loadImage() {
@@ -82,31 +97,46 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                const img = new Image();
-                img.onload = function () {
-                    inputCtx.clearRect(0, 0, inputCanvas.width, inputCanvas.height);
-                    inputCtx.drawImage(img, 0, 0, inputCanvas.width, inputCanvas.height);
-                };
-                img.src = e.target.result;
+                // Display the uploaded image in the input image element
+                inputImage.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
     }
 
     function findCharacters() {
-        if (inputCanvas.width === 0) {
-            alert("Lütfen önce bir resim yükleyin."); // Please select or load an image first.
+        if (inputImage.getAttribute('src') === "default_image.jpg") {
+            alert("Please upload an image first."); // Please select or load an image first.
             return;
         }
 
         // Convert the input image to base64
-        const imgData = inputCanvas.toDataURL('image/jpeg');
-        const base64Image = imgData.split(',')[1];
+        const imgSrc = inputImage.getAttribute('src');
+        const base64Image = imgSrc.split(',')[1];
 
         // Call the API with the base64 image
         const apiUrl = "https://detect.roboflow.com/e7_character_combat/1";
         const apiKey = "AGVpfz4xEx87AziG2odL";
 
+        fetch(`${apiUrl}?api_key=${apiKey}&format=image`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: base64Image,
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            // Create an object URL from the returned blob and set it as the source for the result image
+            const objectURL = URL.createObjectURL(blob);
+            resultImage.src = objectURL;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing the image.'); // An error occurred while processing the image.
+        });
+
+        // Fetch and display the JSON result
         fetch(`${apiUrl}?api_key=${apiKey}`, {
             method: 'POST',
             headers: {
@@ -116,37 +146,10 @@ Load Image From File: <input type="file" accept="image/*" id="imageInput" onchan
         })
         .then(response => response.json())
         .then(data => {
-            // Display the JSON results
             resultText.innerHTML = JSON.stringify(data, null, 2);
-
-            // Clear the result canvas and redraw the input image
-            resultCtx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
-            const img = new Image();
-            img.src = imgData;
-            img.onload = function () {
-                resultCtx.drawImage(img, 0, 0, resultCanvas.width, resultCanvas.height);
-
-                // Draw results (dummy example, adjust according to your API results)
-                if (data && data.predictions) {
-                    data.predictions.forEach(prediction => {
-                        // Example values for bounding box and label
-                        const { x, y, width, height, label } = prediction; // Ensure your API returns these values
-                        
-                        // Draw bounding box
-                        resultCtx.strokeStyle = 'red';
-                        resultCtx.lineWidth = 2;
-                        resultCtx.strokeRect(x, y, width, height);
-
-                        // Draw label
-                        resultCtx.fillStyle = 'red';
-                        resultCtx.fillText(label, x, y > 10 ? y - 5 : 10); // Avoid text going off canvas
-                    });
-                }
-            };
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Resim işlenirken bir hata oluştu.'); // An error occurred while processing the image.
         });
     }
 </script>
