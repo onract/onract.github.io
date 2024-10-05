@@ -199,81 +199,84 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
         });
 
         fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: base64Image,
-    })
-    .then(response => response.json())
-    .then(data => {
-        resultText.innerHTML = JSON.stringify(data, null, 2);
-        characterTable.innerHTML = ''; // Clear previous table data
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: base64Image,
+        })
+        .then(response => response.json())
+        .then(data => {
+            resultText.innerHTML = JSON.stringify(data, null, 2);
+            characterTable.innerHTML = ''; // Clear previous table data
 
-        const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
-        const combats = data.predictions.filter(pred => pred.class === 'combat');
+            const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
+            const combats = data.predictions.filter(pred => pred.class === 'combat');
 
-        // Sort characters based on their 'y' value
-        characters.sort((a, b) => a.y - b.y);
+            // Sort characters based on their 'y' value
+            characters.sort((a, b) => a.y - b.y);
 
-        const img = new Image();
-        img.src = inputImage.src;
+            const img = new Image();
+            img.src = inputImage.src;
 
-        img.onload = function () {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
 
-            characters.forEach(character => {
-                const row = document.createElement('tr');
-                
-                // Cropped character image
-                const charCell = document.createElement('td');
-                const charImg = document.createElement('img');
+                characters.forEach(character => {
+                    const row = document.createElement('tr');
+                    
+                    // Cropped character image
+                    const charCell = document.createElement('td');
+                    const charImg = document.createElement('img');
 
-                // Set canvas size to the character's width and height
-                canvas.width = character.width;
-                canvas.height = character.height;
+                    // Set canvas size to the character's width and height
+                    canvas.width = character.width;
+                    canvas.height = character.height;
 
-                // Crop the character from the image
-                ctx.drawImage(
-                    img,
-                    character.x - character.width / 2, // Adjust X coordinate
-                    character.y - character.height / 2, // Adjust Y coordinate
-                    character.width, // Width to crop
-                    character.height, // Height to crop
-                    0, 0, // Position on canvas
-                    character.width, character.height // Size on canvas
-                );
+                    // Crop the character from the image
+                    ctx.drawImage(
+                        img,
+                        character.x - character.width / 2, // Adjust X coordinate
+                        character.y - character.height / 2, // Adjust Y coordinate
+                        character.width, // Width to crop
+                        character.height, // Height to crop
+                        0, 0, // Position on canvas
+                        character.width, character.height // Size on canvas
+                    );
 
-                // Convert cropped area to data URL
-                charImg.src = canvas.toDataURL();
-                charImg.style.maxWidth = '100px'; // Adjust size if needed
-                charCell.appendChild(charImg);
-                row.appendChild(charCell);
+                    // Convert cropped area to data URL
+                    charImg.src = canvas.toDataURL();
+                    charImg.style.maxWidth = '100px'; // Adjust size if needed
+                    charCell.appendChild(charImg);
+                    row.appendChild(charCell);
 
-                // Find nearest combat by comparing 'y' values
-                let nearestCombat = combats.reduce((prev, curr) => {
-                    return (Math.abs(curr.y - character.y) < Math.abs(prev.y - character.y)) ? curr : prev;
-                }, combats[0]);
+                    // Find nearest combat by comparing 'y' and 'x' values
+                    let nearestCombat = combats.reduce((prev, curr) => {
+                        const prevDistance = Math.sqrt(Math.pow(curr.x - character.x, 2) + Math.pow(curr.y - character.y, 2));
+                        const currDistance = Math.sqrt(Math.pow(curr.x - character.x, 2) + Math.pow(curr.y - character.y, 2));
 
-                // Combat info
-                const combatCell = document.createElement('td');
-                combatCell.innerText = nearestCombat.combat_info || "N/A"; // Replace with actual field
-                row.appendChild(combatCell);
+                        return (currDistance < prevDistance) ? curr : prev;
+                    }, combats[0]);
 
-                // Speed (initialize to 0 or provide actual value)
-                const speedCell = document.createElement('td');
-                speedCell.innerText = '0'; // Replace with actual speed if available
-                row.appendChild(speedCell);
+                    // Combat info
+                    const combatCell = document.createElement('td');
+                    combatCell.innerText = nearestCombat.combat_info || "N/A"; // Replace with actual field
+                    row.appendChild(combatCell);
 
-                characterTable.appendChild(row);
-            });
-        };
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        statusMessage.innerText = 'Error occurred while fetching the results.';
-    });
+                    // Speed (initialize to 0 or provide actual value)
+                    const speedCell = document.createElement('td');
+                    speedCell.innerText = '0'; // Replace with actual speed if available
+                    row.appendChild(speedCell);
+
+                    characterTable.appendChild(row);
+                });
+            };
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            statusMessage.innerText = 'Error occurred while fetching the results.';
+        });
     }
 </script>
 
