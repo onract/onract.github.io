@@ -54,6 +54,26 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        td img {
+            max-width: 100px;
+            max-height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -79,9 +99,7 @@
 Load Image From File: <input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
 <br><br>
 
-<!-- API URL and Key input -->
-API URL: <input type="text" id="apiUrl" placeholder="Enter API URL">
-<br><br>
+<!-- API Key input -->
 API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 <br><br>
 
@@ -91,7 +109,24 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 <div id="statusMessage"></div>
 
 <div id="result">
-    <h2>Inference Results</h2>
+    <h2>Character Detection Results</h2>
+
+    <!-- Dynamic Table for Characters and Combat Info -->
+    <table id="characterTable">
+        <!-- Table Headers -->
+        <thead>
+            <tr>
+                <th>Character</th>
+                <th>Combat Info</th>
+                <th>Speed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <h2>Inference Results (Raw Data)</h2>
     <pre id="resultText"></pre>
 </div>
 
@@ -101,6 +136,9 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
     let resultImage = document.getElementById('resultImage');
     let resultText = document.getElementById('resultText');
     let statusMessage = document.getElementById('statusMessage');
+    let characterTable = document.getElementById('characterTable').querySelector('tbody');
+
+    const apiUrl = "https://detect.roboflow.com/e7_character_combat/1"; // Fixed API URL
 
     // Display default image on page load
     window.onload = function () {
@@ -129,12 +167,11 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
             return;
         }
 
-        // Get API URL and Key from user input
-        const apiUrlInput = document.getElementById('apiUrl').value;
+        // Get API Key from user input
         const apiKeyInput = document.getElementById('apiKey').value;
 
-        if (!apiUrlInput || !apiKeyInput) {
-            alert("Please provide both API URL and API Key.");
+        if (!apiKeyInput) {
+            alert("Please provide an API Key.");
             return;
         }
 
@@ -146,7 +183,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
         const base64Image = imgSrc.split(',')[1];
 
         // Call the API with the base64 image
-        fetch(`${apiUrlInput}?api_key=${apiKeyInput}&format=image`, {
+        fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -172,7 +209,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
         });
 
         // Fetch and display the JSON result
-        fetch(`${apiUrlInput}?api_key=${apiKeyInput}`, {
+        fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -182,6 +219,36 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
         .then(response => response.json())
         .then(data => {
             resultText.innerHTML = JSON.stringify(data, null, 2);
+
+            // Clear previous table data
+            characterTable.innerHTML = '';
+
+            // Parse the detected allies and enemies (example structure, adjust to your API response)
+            const characters = data.predictions; // Assuming this is where the data is
+
+            characters.forEach(character => {
+                const row = document.createElement('tr');
+                
+                // Cropped character image
+                const charCell = document.createElement('td');
+                const charImg = document.createElement('img');
+                charImg.src = character.cropped_image_url; // Replace with actual image URL
+                charCell.appendChild(charImg);
+                row.appendChild(charCell);
+
+                // Combat information (nearest combat info based on y-axis)
+                const combatCell = document.createElement('td');
+                combatCell.innerText = character.combat_info; // Adjust based on API response
+                row.appendChild(combatCell);
+
+                // Speed (initially set to 0)
+                const speedCell = document.createElement('td');
+                speedCell.innerText = '0'; // Speed starts at 0
+                row.appendChild(speedCell);
+
+                characterTable.appendChild(row);
+            });
+
         })
         .catch(error => {
             console.error('Error:', error);
