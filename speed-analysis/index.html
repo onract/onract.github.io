@@ -213,9 +213,6 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
             const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
             const combats = data.predictions.filter(pred => pred.class === 'combat');
 
-            // Sort characters based on their 'y' value
-            characters.sort((a, b) => a.y - b.y);
-
             const img = new Image();
             img.src = inputImage.src;
 
@@ -225,7 +222,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                 characters.forEach(character => {
                     const row = document.createElement('tr');
-                    
+
                     // Cropped character image
                     const charCell = document.createElement('td');
                     const charImg = document.createElement('img');
@@ -251,34 +248,38 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     charCell.appendChild(charImg);
                     row.appendChild(charCell);
 
-                    // Find nearest combat by comparing 'y' values only
-                    let nearestCombat = combats.reduce((prev, curr) => {
-                        const prevDistance = Math.abs(curr.y - character.y);
-                        const currDistance = Math.abs(curr.y - character.y);
-
-                        return (currDistance < prevDistance) ? curr : prev;
-                    }, combats[0]);
+                    // Find nearest combat based only on 'y' values
+                    const nearestCombat = combats.reduce((closest, current) => {
+                        if (!closest) return current; // If no closest, return current
+                        return Math.abs(current.y - character.y) < Math.abs(closest.y - character.y) ? current : closest;
+                    }, null);
 
                     // Combat image
                     const combatCell = document.createElement('td');
                     const combatImg = document.createElement('img');
-                    canvas.width = nearestCombat.width;
-                    canvas.height = nearestCombat.height;
 
-                    // Crop the combat from the image
-                    ctx.drawImage(
-                        img,
-                        nearestCombat.x - nearestCombat.width / 2, // Adjust X coordinate
-                        nearestCombat.y - nearestCombat.height / 2, // Adjust Y coordinate
-                        nearestCombat.width, // Width to crop
-                        nearestCombat.height, // Height to crop
-                        0, 0, // Position on canvas
-                        nearestCombat.width, nearestCombat.height // Size on canvas
-                    );
+                    if (nearestCombat) {
+                        canvas.width = nearestCombat.width;
+                        canvas.height = nearestCombat.height;
 
-                    // Convert cropped area to data URL
-                    combatImg.src = canvas.toDataURL();
-                    combatImg.style.maxWidth = '100px'; // Adjust size if needed
+                        // Crop the combat from the image
+                        ctx.drawImage(
+                            img,
+                            nearestCombat.x - nearestCombat.width / 2, // Adjust X coordinate
+                            nearestCombat.y - nearestCombat.height / 2, // Adjust Y coordinate
+                            nearestCombat.width, // Width to crop
+                            nearestCombat.height, // Height to crop
+                            0, 0, // Position on canvas
+                            nearestCombat.width, nearestCombat.height // Size on canvas
+                        );
+
+                        // Convert cropped area to data URL
+                        combatImg.src = canvas.toDataURL();
+                        combatImg.style.maxWidth = '100px'; // Adjust size if needed
+                    } else {
+                        combatImg.src = ''; // Or a placeholder image if no combat is found
+                    }
+
                     combatCell.appendChild(combatImg);
                     row.appendChild(combatCell);
 
