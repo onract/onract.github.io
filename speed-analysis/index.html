@@ -213,6 +213,9 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
             const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
             const combats = data.predictions.filter(pred => pred.class === 'combat');
 
+            // Sort characters by their 'y' value (smallest to largest)
+            characters.sort((a, b) => a.y - b.y);
+
             const img = new Image();
             img.src = inputImage.src;
 
