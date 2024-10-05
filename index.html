@@ -1,261 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E7 Combat Detect</title>
-    <style>
-        .image-container {
-            width: 500px;
-            height: 500px;
-            border: 1px solid #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f0f0;
-            margin-bottom: 10px;
+    <meta charset="utf-8">
+    <!-- SEO -->
+    <title>onract’s Homepage</title>
+    <meta property="og:locale" content="en-US">
+    <meta property="og:site_name" content="onract(Racton)’s Homepage">
+    <meta property="og:title" content="onract(Racton)’s Homepage">
+    <link rel="canonical" href="https://onract.github.io/">
+    <meta property="og:url" content="https://onract.github.io/">
+    <meta property="og:description" content="personal description">
+    <script type="application/ld+json">
+        {
+            "@context" : "https://onract.github.io",
+            "@type" : "Person",
+            "name" : "onract",
+            "url" : "https://onract.github.io",
+            "sameAs" : null
         }
-
-        .image-container img {
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-        }
-
-        #findButton {
-            width: 100px;
-            height: 100px;
-            font-size: 16px;
-        }
-
-        #images {
-            display: flex;
-            gap: 20px;
-        }
-
-        h3 {
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        #statusMessage {
-            margin-top: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: blue;
-        }
-
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        td img {
-            max-width: 100px;
-            max-height: 100px;
-        }
-    </style>
+    </script>
+    <link rel="stylesheet" href="styles.css"> <!-- Added the external CSS file -->
 </head>
 <body>
-
-<h1>E7 Character & Combat Detect</h1>
-
-<div id="images">
-    <div>
-        <h3>Input Image</h3> <!-- Input Image -->
-        <div class="image-container">
-            <img id="inputImage" src="default_image.png" alt="Input Image">
+    <div class="container">
+        <div class="left-panel">
+            <div class="profile">
+                <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Profile Picture">
+                <div class="contact-info">
+                    <p>Discord: racton</p>
+                    <!--
+                    <p>Email: onract595@gmail.com</p>
+                     -->
+                    <!-- Other Informations -->
+                </div>
+            </div>
+        </div>
+        <div class="top-panel" style="background-color: #111;">
+            <!-- Top of right panel -->
+            <!-- 
+            <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Test 1"> 
+            <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Test 1"> 
+            <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Test 1">
+            -->
+            <!-- Other contents -->
+        </div>
+        <div class="right-panel">
+            <!-- 
+            <h2>Works</h2>
+            -->
+            <ul class="work-list">
+                <li class="work-item">
+                    <a href="speed-analysis/index.html">
+                        <img src="icon/speed_analysis.png" alt="EpicSeven - Character and Combat Detect">
+                        <div class="work-description">
+                            <h3>EpicSeven - Character and Combat Detect</h3>
+                            <p>Character detection and speed analysis via combat readiness list in Epic Seven matches.</p>
+                    </div>
+                </li>
+                <!--
+                <li class="work-item">
+                    <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Work 2"> 
+                    <div class="work-description">
+                        <h3>Test Title 2</h3>
+                        <p>short description</p>
+                    </div>
+                </li>
+                <li class="work-item">
+                    <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Work 3"> 
+                    <div class="work-description">
+                        <h3>Test Title 3</h3>
+                        <p>short description</p>
+                    </div>
+                </li>
+                <li class="work-item">
+                    <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Work 4">
+                    <div class="work-description">
+                        <h3>Test Title 4</h3>
+                        <p>short description</p>
+                    </div>
+                </li>
+                <li class="work-item">
+                    <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Work 5">
+                    <div class="work-description">
+                        <h3>Test Title 5</h3>
+                        <p>short description</p>
+                    </div>
+                </li>
+                <li class="work-item">
+                    <img src="https://i.pinimg.com/736x/69/36/bb/6936bbb69a3d9ff4f4850f0e927f5ca7.jpg" alt="Work 6"> 
+                    <div class="work-description">
+                        <h3>Test Title 6</h3>
+                        <p>short description</p>
+                    </div>
+                </li>
+                -->
+                <!-- Other works list can be added here -->
+            </ul>
         </div>
     </div>
-    <div>
-        <h3>Output Image</h3> <!-- Result Image -->
-        <div class="image-container">
-            <img id="resultImage" src="default_image.png" alt="Result Image">
-        </div>
-    </div>
-</div>
-
-<br>
-Load Image From File: <input type="file" accept="image/*" id="imageInput" onchange="loadImage()">
-<br><br>
-
-<!-- API Key input -->
-API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
-<br><br>
-
-<button id="findButton" onclick="findCharacters()">Find Characters</button>
-
-<!-- Status Message Area -->
-<div id="statusMessage"></div>
-
-<div id="result">
-    <h2>Character Detection Results</h2>
-
-    <!-- Dynamic Table for Characters and Combat Info -->
-    <table id="characterTable">
-        <!-- Table Headers -->
-        <thead>
-            <tr>
-                <th>Character</th>
-                <th>Combat Info</th>
-                <th>Speed</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be dynamically added here -->
-        </tbody>
-    </table>
-
-    <h2>Inference Results (Raw Data)</h2>
-    <pre id="resultText"></pre>
-</div>
-
-<script>
-    let imageInput = document.getElementById('imageInput');
-    let inputImage = document.getElementById('inputImage');
-    let resultImage = document.getElementById('resultImage');
-    let resultText = document.getElementById('resultText');
-    let statusMessage = document.getElementById('statusMessage');
-    let characterTable = document.getElementById('characterTable').querySelector('tbody');
-
-    const apiUrl = "https://detect.roboflow.com/e7_character_combat/1"; // Fixed API URL
-
-    // Display default image on page load
-    window.onload = function () {
-        inputImage.src = "default_image.png";
-        resultImage.src = "default_image.png";
-        statusMessage.innerText = ''; // Clear status message on load
-    };
-
-    function loadImage() {
-        const file = imageInput.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                // Display the uploaded image in the input image element
-                inputImage.src = e.target.result;
-                statusMessage.innerText = 'Image loaded. Ready for detection.'; // Update status
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function findCharacters() {
-        if (inputImage.getAttribute('src') === "default_image.png") {
-            alert("Please upload an image first."); // Please select or load an image first.
-            return;
-        }
-
-        // Get API Key from user input
-        const apiKeyInput = document.getElementById('apiKey').value;
-
-        if (!apiKeyInput) {
-            alert("Please provide an API Key.");
-            return;
-        }
-
-        // Set status to uploading image
-        statusMessage.innerText = 'Uploading image...';
-
-        // Convert the input image to base64
-        const imgSrc = inputImage.getAttribute('src');
-        const base64Image = imgSrc.split(',')[1];
-
-        // Call the API with the base64 image
-        fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: base64Image,
-        })
-        .then(response => {
-            // Update status to processing
-            statusMessage.innerText = 'Processing image...';
-
-            return response.blob();
-        })
-        .then(blob => {
-            // Create an object URL from the returned blob and set it as the source for the result image
-            const objectURL = URL.createObjectURL(blob);
-            resultImage.src = objectURL;
-            statusMessage.innerText = 'Detection completed. Displaying results...'; // Update status
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while processing the image.'); // An error occurred while processing the image.
-            statusMessage.innerText = 'Error occurred during image processing.'; // Update status
-        });
-
-        // Fetch and display the JSON result
-        fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: base64Image,
-        })
-        .then(response => response.json())
-        .then(data => {
-            resultText.innerHTML = JSON.stringify(data, null, 2);
-
-            // Clear previous table data
-            characterTable.innerHTML = '';
-
-            // Parse the detected allies and enemies (example structure, adjust to your API response)
-            const characters = data.predictions; // Assuming this is where the data is
-
-            characters.forEach(character => {
-                const row = document.createElement('tr');
-                
-                // Cropped character image
-                const charCell = document.createElement('td');
-                const charImg = document.createElement('img');
-                charImg.src = character.cropped_image_url; // Replace with actual image URL
-                charCell.appendChild(charImg);
-                row.appendChild(charCell);
-
-                // Combat information (nearest combat info based on y-axis)
-                const combatCell = document.createElement('td');
-                combatCell.innerText = character.combat_info; // Adjust based on API response
-                row.appendChild(combatCell);
-
-                // Speed (initially set to 0)
-                const speedCell = document.createElement('td');
-                speedCell.innerText = '0'; // Speed starts at 0
-                row.appendChild(speedCell);
-
-                characterTable.appendChild(row);
+    <script src="script.js"></script> <!-- Added the external JavaScript file -->
+    <script>
+        document.querySelectorAll('.work-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('clicked'); // Toggle clicked class
             });
-
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            statusMessage.innerText = 'Error occurred while fetching the results.'; // Update status
         });
-    }
-</script>
-
+    </script>
 </body>
 </html>
