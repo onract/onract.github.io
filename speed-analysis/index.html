@@ -163,11 +163,10 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
 function findCharacters() {
     if (inputImage.getAttribute('src') === "default_image.png") {
-        alert("Please upload an image first."); // Please select or load an image first.
+        alert("Please upload an image first."); 
         return;
     }
 
-    // Get API Key from user input
     const apiKeyInput = document.getElementById('apiKey').value;
 
     if (!apiKeyInput) {
@@ -175,14 +174,11 @@ function findCharacters() {
         return;
     }
 
-    // Set status to uploading image
     statusMessage.innerText = 'Uploading image...';
 
-    // Convert the input image to base64
     const imgSrc = inputImage.getAttribute('src');
     const base64Image = imgSrc.split(',')[1];
 
-    // Call the API with the base64 image
     fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
         method: 'POST',
         headers: {
@@ -190,25 +186,18 @@ function findCharacters() {
         },
         body: base64Image,
     })
-    .then(response => {
-        // Update status to processing
-        statusMessage.innerText = 'Processing image...';
-
-        return response.blob();
-    })
+    .then(response => response.blob())
     .then(blob => {
-        // Create an object URL from the returned blob and set it as the source for the result image
         const objectURL = URL.createObjectURL(blob);
         resultImage.src = objectURL;
-        statusMessage.innerText = 'Detection completed. Displaying results...'; // Update status
+        statusMessage.innerText = 'Detection completed. Displaying results...';
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while processing the image.'); // An error occurred while processing the image.
-        statusMessage.innerText = 'Error occurred during image processing.'; // Update status
+        alert('An error occurred while processing the image.');
+        statusMessage.innerText = 'Error occurred during image processing.';
     });
 
-    // Fetch and display the JSON result
     fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
         method: 'POST',
         headers: {
@@ -219,68 +208,50 @@ function findCharacters() {
     .then(response => response.json())
     .then(data => {
         resultText.innerHTML = JSON.stringify(data, null, 2);
+        characterTable.innerHTML = ''; // Clear previous table data
 
-        // Clear previous table data
-        characterTable.innerHTML = '';
+        const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
+        
+        // Sort characters based on their 'y' value
+        characters.sort((a, b) => a.y - b.y);
 
-        // Parse the detected allies and enemies (example structure, adjust to your API response)
-        const characters = data.predictions; // Assuming this is where the data is
+        // Iterate through sorted characters and assign combat info
+        characters.forEach((character, index) => {
+            const row = document.createElement('tr');
+            
+            // Cropped character image
+            const charCell = document.createElement('td');
+            const charImg = document.createElement('img');
+            charImg.src = character.cropped_image_url || 'default_image.png'; // Update with correct cropped image
+            charCell.appendChild(charImg);
+            row.appendChild(charCell);
 
-        // Create a temporary image object for cropping
-        const img = new Image();
-        img.src = inputImage.src;
+            // Find nearest combat by comparing 'y' values
+            let nearestCombat = null;
+            for (let i = 0; i < data.predictions.length; i++) {
+                const combat = data.predictions[i];
+                if (combat.class === 'combat' && (!nearestCombat || Math.abs(combat.y - character.y) < Math.abs(nearestCombat.y - character.y))) {
+                    nearestCombat = combat;
+                }
+            }
 
-        img.onload = function () {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+            // Combat information
+            const combatCell = document.createElement('td');
+            combatCell.innerText = nearestCombat ? nearestCombat.combat_info : 'N/A'; // Adjust combat info as needed
+            row.appendChild(combatCell);
 
-            characters.forEach(character => {
-                const row = document.createElement('tr');
-                
-                // Cropped character image
-                const charCell = document.createElement('td');
-                const charImg = document.createElement('img');
+            // Speed (initialize to 0)
+            const speedCell = document.createElement('td');
+            speedCell.innerText = '0'; 
+            row.appendChild(speedCell);
 
-                // Set canvas size to the character's width and height
-                canvas.width = character.width;
-                canvas.height = character.height;
+            characterTable.appendChild(row);
+        });
 
-                // Crop the character from the image
-                ctx.drawImage(
-                    img,
-                    character.x - character.width / 2, // X coordinate of the top-left corner
-                    character.y - character.height / 2, // Y coordinate of the top-left corner
-                    character.width,
-                    character.height,
-                    0,
-                    0,
-                    character.width,
-                    character.height
-                );
-
-                // Convert the cropped area to a data URL and display it in the table
-                charImg.src = canvas.toDataURL();
-                charImg.style.maxWidth = '100px'; // Adjust size if necessary
-                charCell.appendChild(charImg);
-                row.appendChild(charCell);
-
-                // Combat information (nearest combat info based on y-axis)
-                const combatCell = document.createElement('td');
-                combatCell.innerText = character.combat_info || "N/A"; // Adjust based on API response
-                row.appendChild(combatCell);
-
-                // Speed (initially set to 0)
-                const speedCell = document.createElement('td');
-                speedCell.innerText = '0'; // Speed starts at 0
-                row.appendChild(speedCell);
-
-                characterTable.appendChild(row);
-            });
-        };
     })
     .catch(error => {
         console.error('Error:', error);
-        statusMessage.innerText = 'Error occurred while fetching the results.'; // Update status
+        statusMessage.innerText = 'Error occurred while fetching the results.';
     });
 }
 </script>
