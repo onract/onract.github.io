@@ -251,10 +251,10 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     charCell.appendChild(charImg);
                     row.appendChild(charCell);
 
-                    // Find nearest combat by comparing 'y' and 'x' values
+                    // Find nearest combat by comparing 'y' values only
                     let nearestCombat = combats.reduce((prev, curr) => {
-                        const prevDistance = Math.sqrt(Math.pow(curr.x - character.x, 2) + Math.pow(curr.y - character.y, 2));
-                        const currDistance = Math.sqrt(Math.pow(curr.x - character.x, 2) + Math.pow(curr.y - character.y, 2));
+                        const prevDistance = Math.abs(curr.y - character.y);
+                        const currDistance = Math.abs(curr.y - character.y);
 
                         return (currDistance < prevDistance) ? curr : prev;
                     }, combats[0]);
