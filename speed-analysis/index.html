@@ -259,9 +259,27 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         return (currDistance < prevDistance) ? curr : prev;
                     }, combats[0]);
 
-                    // Combat info
+                    // Combat image
                     const combatCell = document.createElement('td');
-                    combatCell.innerText = nearestCombat.combat_info || "N/A"; // Replace with actual field
+                    const combatImg = document.createElement('img');
+                    canvas.width = nearestCombat.width;
+                    canvas.height = nearestCombat.height;
+
+                    // Crop the combat from the image
+                    ctx.drawImage(
+                        img,
+                        nearestCombat.x - nearestCombat.width / 2, // Adjust X coordinate
+                        nearestCombat.y - nearestCombat.height / 2, // Adjust Y coordinate
+                        nearestCombat.width, // Width to crop
+                        nearestCombat.height, // Height to crop
+                        0, 0, // Position on canvas
+                        nearestCombat.width, nearestCombat.height // Size on canvas
+                    );
+
+                    // Convert cropped area to data URL
+                    combatImg.src = canvas.toDataURL();
+                    combatImg.style.maxWidth = '100px'; // Adjust size if needed
+                    combatCell.appendChild(combatImg);
                     row.appendChild(combatCell);
 
                     // Speed (initialize to 0 or provide actual value)
