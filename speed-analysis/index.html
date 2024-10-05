@@ -161,99 +161,98 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
         }
     }
 
-function findCharacters() {
-    if (inputImage.getAttribute('src') === "default_image.png") {
-        alert("Please upload an image first."); 
-        return;
-    }
+    function findCharacters() {
+        if (inputImage.getAttribute('src') === "default_image.png") {
+            alert("Please upload an image first."); 
+            return;
+        }
 
-    const apiKeyInput = document.getElementById('apiKey').value;
+        const apiKeyInput = document.getElementById('apiKey').value;
 
-    if (!apiKeyInput) {
-        alert("Please provide an API Key.");
-        return;
-    }
+        if (!apiKeyInput) {
+            alert("Please provide an API Key.");
+            return;
+        }
 
-    statusMessage.innerText = 'Uploading image...';
+        statusMessage.innerText = 'Uploading image...';
 
-    const imgSrc = inputImage.getAttribute('src');
-    const base64Image = imgSrc.split(',')[1];
+        const imgSrc = inputImage.getAttribute('src');
+        const base64Image = imgSrc.split(',')[1];
 
-    fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: base64Image,
-    })
-    .then(response => response.blob())
-    .then(blob => {
-        const objectURL = URL.createObjectURL(blob);
-        resultImage.src = objectURL;
-        statusMessage.innerText = 'Detection completed. Displaying results...';
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while processing the image.');
-        statusMessage.innerText = 'Error occurred during image processing.';
-    });
-
-    fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: base64Image,
-    })
-    .then(response => response.json())
-    .then(data => {
-        resultText.innerHTML = JSON.stringify(data, null, 2);
-        characterTable.innerHTML = ''; // Clear previous table data
-
-        const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
-        
-        // Sort characters based on their 'y' value
-        characters.sort((a, b) => a.y - b.y);
-
-        // Iterate through sorted characters and assign combat info
-        characters.forEach((character, index) => {
-            const row = document.createElement('tr');
-            
-            // Cropped character image
-            const charCell = document.createElement('td');
-            const charImg = document.createElement('img');
-            charImg.src = character.cropped_image_url || 'default_image.png'; // Update with correct cropped image
-            charCell.appendChild(charImg);
-            row.appendChild(charCell);
-
-            // Find nearest combat by comparing 'y' values
-            let nearestCombat = null;
-            for (let i = 0; i < data.predictions.length; i++) {
-                const combat = data.predictions[i];
-                if (combat.class === 'combat' && (!nearestCombat || Math.abs(combat.y - character.y) < Math.abs(nearestCombat.y - character.y))) {
-                    nearestCombat = combat;
-                }
-            }
-
-            // Combat information
-            const combatCell = document.createElement('td');
-            combatCell.innerText = nearestCombat ? nearestCombat.combat_info : 'N/A'; // Adjust combat info as needed
-            row.appendChild(combatCell);
-
-            // Speed (initialize to 0)
-            const speedCell = document.createElement('td');
-            speedCell.innerText = '0'; 
-            row.appendChild(speedCell);
-
-            characterTable.appendChild(row);
+        fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: base64Image,
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const objectURL = URL.createObjectURL(blob);
+            resultImage.src = objectURL;
+            statusMessage.innerText = 'Detection completed. Displaying results...';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing the image.');
+            statusMessage.innerText = 'Error occurred during image processing.';
         });
 
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        statusMessage.innerText = 'Error occurred while fetching the results.';
-    });
-}
+        fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: base64Image,
+        })
+        .then(response => response.json())
+        .then(data => {
+            resultText.innerHTML = JSON.stringify(data, null, 2);
+            characterTable.innerHTML = ''; // Clear previous table data
+
+            const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
+            const combats = data.predictions.filter(pred => pred.class === 'combat');
+
+            // Sort characters based on their 'y' value
+            characters.sort((a, b) => a.y - b.y);
+
+            // Iterate through sorted characters and assign nearest combat info
+            characters.forEach((character) => {
+                const row = document.createElement('tr');
+                
+                // Cropped character image
+                const charCell = document.createElement('td');
+                const charImg = document.createElement('img');
+                charImg.src = character.cropped_image_url || 'default_image.png'; // Cropped character image
+                charCell.appendChild(charImg);
+                row.appendChild(charCell);
+
+                // Find nearest combat by comparing 'y' values
+                let nearestCombat = combats.reduce((prev, curr) => {
+                    return (Math.abs(curr.y - character.y) < Math.abs(prev.y - character.y)) ? curr : prev;
+                }, combats[0]);
+
+                // Combat image and info
+                const combatCell = document.createElement('td');
+                const combatImg = document.createElement('img');
+                combatImg.src = nearestCombat.cropped_image_url || 'default_image.png'; // Cropped combat image
+                combatCell.appendChild(combatImg);
+                row.appendChild(combatCell);
+
+                // Speed (initialize to 0 or provide actual value)
+                const speedCell = document.createElement('td');
+                speedCell.innerText = '0'; // Replace with actual speed if available
+                row.appendChild(speedCell);
+
+                characterTable.appendChild(row);
+            });
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            statusMessage.innerText = 'Error occurred while fetching the results.';
+        });
+    }
 </script>
 
 </body>
