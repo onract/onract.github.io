@@ -301,7 +301,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
 
                         Tesseract.recognize(combatImage, 'eng', {
-                            tessedit_char_whitelist: '0123456789%',
+                            tessedit_char_whitelist: '0123456789',
                             tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE,
                             logger: m => console.log(m)
                         })
