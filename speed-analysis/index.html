@@ -255,7 +255,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     return Math.abs(current.y - character.y) < Math.abs(closest.y - character.y) ? current : closest;
                 }, null);
 
-                // Combat image and text extraction using Tesseract.js
+                // Combat text using Tesseract.js
                 const combatCell = document.createElement('td');
 
                 if (nearestCombat) {
@@ -279,14 +279,19 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     combatImg.style.maxWidth = '100px'; // Adjust as necessary
                     combatCell.appendChild(combatImg);
 
-                    // Combat text using Tesseract with whitelist for digits and '%'
+                    // Combat text using Tesseract
                     const textBox = document.createElement('input');
                     textBox.type = 'text';
                     textBox.style.width = '80%';
 
                     const combatImage = canvas.toDataURL();
 
-                    // Use Tesseract to recognize only digits and '%'
+                    // Preprocess the image for better contrast (optional, depending on results)
+                    // Example: Convert image to grayscale, adjust contrast (use canvas manipulation)
+                    ctx.filter = 'contrast(200%)'; // Enhance contrast
+                    ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
+
+                    // Use Tesseract to recognize text with a whitelist for digits and '%' only
                     Tesseract.recognize(combatImage, 'eng', {
                         tessedit_char_whitelist: '0123456789%',
                         logger: m => console.log(m) // Optional logger to track progress
