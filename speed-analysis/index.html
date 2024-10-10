@@ -57,7 +57,7 @@
         }
 
         table {
-            width: 100%;
+            width: 50%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
@@ -72,7 +72,7 @@
         }
 
         td img {
-            max-width: 50px;
+            max-width: 100px;
             max-height: 100px;
         }
     </style>
@@ -292,21 +292,17 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
 
                     // Use Tesseract to recognize text with a whitelist for digits and '%' only
-                    // Tesseract.recognize(combatImage, 'eng', {
-                    //     tessedit_char_whitelist: '0123456789%',
-                    //     logger: m => console.log(m) // Optional logger to track progress
-                    // })
                     Tesseract.recognize(combatImage, 'eng', {
-                        tessedit_char_whitelist: '0123456789%',
-                        tessedit_pageseg_mode: 7, // Treat the image as a single text line
-                        logger: m => console.log(m)
-})
+                        tessedit_char_whitelist: '0123456789%', // Limit recognized characters
+                        tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE, // Better suited for single-line text
+                        logger: m => console.log(m) // Optional logger for tracking progress
+                    })
                     .then(({ data: { text } }) => {
-                        textBox.value = text.trim(); // Put the recognized text in the text box
+                        textBox.value = text.trim(); // Update the text box with the recognized text
                     })
                     .catch(err => {
                         console.error('Error recognizing text:', err);
-                        textBox.value = 'N/A'; // Fallback if OCR fails
+                        textBox.value = 'N/A'; // Fallback in case of OCR failure
                     });
 
                     combatCell.appendChild(textBox);
