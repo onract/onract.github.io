@@ -288,7 +288,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         combatImg.src = canvas.toDataURL();
                         combatImg.style.maxWidth = '80px'; // Adjusted width for combat image
-                        combatContainer.appendChild(combatImg); // Add combat image to container
+                        combatCell.appendChild(combatImg);
 
                         // Combat text using Tesseract.js
                         const textBox = document.createElement('input');
@@ -313,18 +313,18 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                             textBox.value = 'N/A';
                         });
 
-                        combatContainer.appendChild(textBox); // Add text box to container
-                        combatCell.appendChild(combatContainer); // Add container to the combat cell
+                        combatCell.appendChild(textBox);
                     } else {
                         combatCell.innerText = 'No combat data';
                     }
+
+                    row.appendChild(combatCell);
 
                     // Speed cell
                     const speedCell = document.createElement('td');
                     speedCell.className = 'speed-cell'; // Add a class for styling
                     const speedInput = document.createElement('input');
                     speedInput.type = 'text';
-                    speedInput.value = '0'; // Set default speed value to '0'
                     speedInput.style.width = '40px'; // Narrower width for the speed input
                     speedCell.appendChild(speedInput); // Add the speed input to the cell
                     row.appendChild(speedCell);
