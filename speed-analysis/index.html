@@ -57,33 +57,24 @@
         }
 
         table {
-    width: 100%; /* Use full width */
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    }
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
 
-    th, td {
-        padding: 5px; /* Decrease padding */
-        text-align: center;
-    }
+        table, th, td {
+            border: 1px solid black;
+        }
 
-    td img {
-        max-width: 80px; /* Adjust image width as needed */
-        max-height: 80px; /* Adjust image height as needed */
-    }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
 
-    /* Specific column widths */
-    .character-cell {
-        width: 80px; /* Width for character image */
-    }
-
-    .combat-cell {
-        width: 100px; /* Width for combat info (image + text) */
-    }
-
-    .speed-cell {
-        width: 50px; /* Width for speed input */
-    }
+        td img {
+            max-width: 100px;
+            max-height: 100px;
+        }
     </style>
 </head>
 <body>
