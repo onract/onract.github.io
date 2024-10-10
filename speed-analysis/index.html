@@ -288,7 +288,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         combatImg.src = canvas.toDataURL();
                         combatImg.style.maxWidth = '80px'; // Adjusted width for combat image
-                        // combatCell.appendChild(combatImg); // ******** TEST - DIFF **************
+                        combatCell.appendChild(combatImg); // ******** TEST - DIFF **************
 
                         // Combat text using Tesseract.js
                         const textBox = document.createElement('input');
