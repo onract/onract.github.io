@@ -68,7 +68,7 @@
         }
 
         th, td {
-            padding: 10px;
+            padding: 20px;
             text-align: center;
         }
 
@@ -264,6 +264,12 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     combatCell.className = 'combat-cell'; // Add a class for styling
 
                     if (nearestCombat) {
+                        // Create a container for the combat image and text box
+                        const combatContainer = document.createElement('div');
+                        combatContainer.style.display = 'flex';
+                        combatContainer.style.alignItems = 'center'; // Center vertically
+                        combatContainer.style.gap = '10px'; // Space between the image and text box
+
                         // Display combat image
                         const combatImg = document.createElement('img');
 
@@ -282,7 +288,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         combatImg.src = canvas.toDataURL();
                         combatImg.style.maxWidth = '80px'; // Adjusted width for combat image
-                        combatCell.appendChild(combatImg);
+                        combatContainer.appendChild(combatImg); // Add combat image to container
 
                         // Combat text using Tesseract.js
                         const textBox = document.createElement('input');
@@ -307,18 +313,18 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                             textBox.value = 'N/A';
                         });
 
-                        combatCell.appendChild(textBox);
+                        combatContainer.appendChild(textBox); // Add text box to container
+                        combatCell.appendChild(combatContainer); // Add container to the combat cell
                     } else {
                         combatCell.innerText = 'No combat data';
                     }
-
-                    row.appendChild(combatCell);
 
                     // Speed cell
                     const speedCell = document.createElement('td');
                     speedCell.className = 'speed-cell'; // Add a class for styling
                     const speedInput = document.createElement('input');
                     speedInput.type = 'text';
+                    speedInput.value = '0'; // Set default speed value to '0'
                     speedInput.style.width = '40px'; // Narrower width for the speed input
                     speedCell.appendChild(speedInput); // Add the speed input to the cell
                     row.appendChild(speedCell);
