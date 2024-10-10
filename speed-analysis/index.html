@@ -268,7 +268,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         // const combatContainer = document.createElement('div');
                         combatCell.style.display = 'flex';
                         combatCell.style.alignItems = 'center'; // Center vertically
-                        combatCell.style.gap = '10px'; // Space between the image and text box
+                        combatCell.style.gap = '20px'; // Space between the image and text box
 
                         // Display combat image
                         const combatImg = document.createElement('img');
@@ -297,8 +297,8 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         const combatImage = canvas.toDataURL();
 
-                        ctx.filter = 'grayscale(100%) contrast(100%)';
-                        ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
+                        ctx.filter = 'grayscale(100%) contrast(150%)';
+                        ctx.drawImage(combatImage, 0, 0, canvas.width, canvas.height);
 
                         Tesseract.recognize(combatImage, 'eng', {
                             tessedit_char_whitelist: '0123456789%',
