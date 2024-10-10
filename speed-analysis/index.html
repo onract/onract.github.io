@@ -297,14 +297,12 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         const combatImage = canvas.toDataURL();
 
-                        ctx.filter = 'grayscale(100%) contrast(200%)';
-                        ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
-                        
-                        combatCell.appendChild(combatImg);
+                        // ctx.filter = 'grayscale(100%) contrast(200%)';
+                        // ctx.drawImage(combatImage, 0, 0, canvas.width, canvas.height);
 
                         Tesseract.recognize(combatImg, 'eng', {
-                            tessedit_char_whitelist: '0123456789\%',
-                            tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE,
+                            // tessedit_char_whitelist: '0123456789%',
+                            // tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE,
                             logger: m => console.log(m)
                         })
                         .then(({ data: { text } }) => {
