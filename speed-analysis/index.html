@@ -299,6 +299,8 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         ctx.filter = 'grayscale(100%) contrast(200%)';
                         ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
+                        
+                        combatCell.appendChild(combatImg);
 
                         Tesseract.recognize(combatImg, 'eng', {
                             tessedit_char_whitelist: '0123456789\%',
