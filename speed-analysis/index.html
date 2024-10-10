@@ -292,10 +292,15 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
 
                     // Use Tesseract to recognize text with a whitelist for digits and '%' only
+                    // Tesseract.recognize(combatImage, 'eng', {
+                    //     tessedit_char_whitelist: '0123456789%',
+                    //     logger: m => console.log(m) // Optional logger to track progress
+                    // })
                     Tesseract.recognize(combatImage, 'eng', {
                         tessedit_char_whitelist: '0123456789%',
-                        logger: m => console.log(m) // Optional logger to track progress
-                    })
+                        tessedit_pageseg_mode: 7, // Treat the image as a single text line
+                        logger: m => console.log(m)
+})
                     .then(({ data: { text } }) => {
                         textBox.value = text.trim(); // Put the recognized text in the text box
                     })
