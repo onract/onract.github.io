@@ -72,8 +72,8 @@
         }
 
         td img {
-            max-width: 100px;
-            max-height: 100px;
+            max-width: 50px;
+            max-height: 50px;
         }
     </style>
 </head>
@@ -289,7 +289,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         // Preprocess the image for better contrast (optional, depending on results)
                         // Example: Convert image to grayscale, adjust contrast (use canvas manipulation)
                         // ctx.filter = 'contrast(110%)'; // Enhance contrast
-                        ctx.filter = 'grayscale(100%) contrast(120%)';
+                        ctx.filter = 'grayscale(100%) contrast(100%)';
                         ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
 
                         // Use Tesseract to recognize text with a whitelist for digits and '%' only
