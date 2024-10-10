@@ -255,13 +255,13 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     return Math.abs(current.y - character.y) < Math.abs(closest.y - character.y) ? current : closest;
                 }, null);
 
-                // Combat text extraction using Tesseract.js
+                // Combat image and text extraction using Tesseract.js
                 const combatCell = document.createElement('td');
-                const textBox = document.createElement('input');
-                textBox.type = 'text';
-                textBox.style.width = '80%';
 
                 if (nearestCombat) {
+                    // Display combat image
+                    const combatImg = document.createElement('img');
+
                     canvas.width = nearestCombat.width;
                     canvas.height = nearestCombat.height;
 
@@ -275,10 +275,18 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         nearestCombat.width, nearestCombat.height
                     );
 
-                    // Convert the combat image to data URL and pass it to Tesseract.js
+                    combatImg.src = canvas.toDataURL();
+                    combatImg.style.maxWidth = '100px'; // Adjust as necessary
+                    combatCell.appendChild(combatImg);
+
+                    // Combat text using Tesseract
+                    const textBox = document.createElement('input');
+                    textBox.type = 'text';
+                    textBox.style.width = '80%';
+
                     const combatImage = canvas.toDataURL();
 
-                    // Use Tesseract to extract text
+                    // Use Tesseract to recognize text from combat image
                     Tesseract.recognize(combatImage, 'eng', {
                         logger: m => console.log(m) // Optional logger to track progress
                     })
@@ -289,9 +297,12 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         console.error('Error recognizing text:', err);
                         textBox.value = 'N/A'; // Fallback if OCR fails
                     });
+
+                    combatCell.appendChild(textBox);
+                } else {
+                    combatCell.innerText = 'No combat data'; // Handle if no combat is found
                 }
 
-                combatCell.appendChild(textBox);
                 row.appendChild(combatCell);
 
                 // Speed
