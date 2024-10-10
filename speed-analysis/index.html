@@ -279,15 +279,16 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     combatImg.style.maxWidth = '100px'; // Adjust as necessary
                     combatCell.appendChild(combatImg);
 
-                    // Combat text using Tesseract
+                    // Combat text using Tesseract with whitelist for digits and '%'
                     const textBox = document.createElement('input');
                     textBox.type = 'text';
                     textBox.style.width = '80%';
 
                     const combatImage = canvas.toDataURL();
 
-                    // Use Tesseract to recognize text from combat image
+                    // Use Tesseract to recognize only digits and '%'
                     Tesseract.recognize(combatImage, 'eng', {
+                        tessedit_char_whitelist: '0123456789%',
                         logger: m => console.log(m) // Optional logger to track progress
                     })
                     .then(({ data: { text } }) => {
