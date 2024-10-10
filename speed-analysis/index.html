@@ -57,24 +57,33 @@
         }
 
         table {
-            width: 50%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+    width: 100%; /* Use full width */
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    }
 
-        table, th, td {
-            border: 1px solid black;
-        }
+    th, td {
+        padding: 5px; /* Decrease padding */
+        text-align: center;
+    }
 
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
+    td img {
+        max-width: 80px; /* Adjust image width as needed */
+        max-height: 80px; /* Adjust image height as needed */
+    }
 
-        td img {
-            max-width: 50px;
-            max-height: 50px;
-        }
+    /* Specific column widths */
+    .character-cell {
+        width: 80px; /* Width for character image */
+    }
+
+    .combat-cell {
+        width: 100px; /* Width for combat info (image + text) */
+    }
+
+    .speed-cell {
+        width: 50px; /* Width for speed input */
+    }
     </style>
 </head>
 <body>
@@ -229,6 +238,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                     // Cropped character image
                     const charCell = document.createElement('td');
+                    charCell.className = 'character-cell'; // Add a class for styling
                     const charImg = document.createElement('img');
 
                     canvas.width = character.width;
@@ -245,7 +255,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                     );
 
                     charImg.src = canvas.toDataURL();
-                    charImg.style.maxWidth = '100px';
+                    charImg.style.maxWidth = '80px'; // Adjusted width for character image
                     charCell.appendChild(charImg);
                     row.appendChild(charCell);
 
@@ -255,8 +265,9 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         return Math.abs(current.y - character.y) < Math.abs(closest.y - character.y) ? current : closest;
                     }, null);
 
-                    // Combat text using Tesseract.js
+                    // Combat info cell
                     const combatCell = document.createElement('td');
+                    combatCell.className = 'combat-cell'; // Add a class for styling
 
                     if (nearestCombat) {
                         // Display combat image
@@ -276,46 +287,46 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         );
 
                         combatImg.src = canvas.toDataURL();
-                        combatImg.style.maxWidth = '100px'; // Adjust as necessary
+                        combatImg.style.maxWidth = '80px'; // Adjusted width for combat image
                         combatCell.appendChild(combatImg);
 
-                        // Combat text using Tesseract
+                        // Combat text using Tesseract.js
                         const textBox = document.createElement('input');
                         textBox.type = 'text';
-                        textBox.style.width = '80%';
+                        textBox.style.width = '40px'; // Narrower width for the text box
 
                         const combatImage = canvas.toDataURL();
 
-                        // Preprocess the image for better contrast (optional, depending on results)
-                        // Example: Convert image to grayscale, adjust contrast (use canvas manipulation)
-                        // ctx.filter = 'contrast(110%)'; // Enhance contrast
                         ctx.filter = 'grayscale(100%) contrast(100%)';
                         ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
 
-                        // Use Tesseract to recognize text with a whitelist for digits and '%' only
                         Tesseract.recognize(combatImage, 'eng', {
-                            tessedit_char_whitelist: '0123456789%', // Limit recognized characters
-                            tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE, // Better suited for single-line text
-                            logger: m => console.log(m) // Optional logger for tracking progress
+                            tessedit_char_whitelist: '0123456789%',
+                            tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE,
+                            logger: m => console.log(m)
                         })
                         .then(({ data: { text } }) => {
-                            textBox.value = text.trim(); // Update the text box with the recognized text
+                            textBox.value = text.trim();
                         })
                         .catch(err => {
                             console.error('Error recognizing text:', err);
-                            textBox.value = 'N/A'; // Fallback in case of OCR failure
+                            textBox.value = 'N/A';
                         });
 
                         combatCell.appendChild(textBox);
                     } else {
-                        combatCell.innerText = 'No combat data'; // Handle if no combat is found
+                        combatCell.innerText = 'No combat data';
                     }
 
                     row.appendChild(combatCell);
 
-                    // Speed
+                    // Speed cell
                     const speedCell = document.createElement('td');
-                    speedCell.innerText = '0'; // Replace with actual speed if available
+                    speedCell.className = 'speed-cell'; // Add a class for styling
+                    const speedInput = document.createElement('input');
+                    speedInput.type = 'text';
+                    speedInput.style.width = '40px'; // Narrower width for the speed input
+                    speedCell.appendChild(speedInput); // Add the speed input to the cell
                     row.appendChild(speedCell);
 
                     characterTable.appendChild(row);
