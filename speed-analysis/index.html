@@ -287,9 +287,6 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
                         );
 
                         combatImg.src = canvas.toDataURL();
-
-                        ctx.filter = 'grayscale(200%) contrast(500%)';
-                        ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
                         combatImg.style.maxWidth = '80px'; // Adjusted width for combat image
                         combatCell.appendChild(combatImg);
 
