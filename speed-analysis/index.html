@@ -288,7 +288,7 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         combatImg.src = canvas.toDataURL();
                         combatImg.style.maxWidth = '80px'; // Adjusted width for combat image
-                        combatCell.appendChild(combatImg);
+                        // combatCell.appendChild(combatImg); // ******** TEST - DIFF **************
 
                         // Combat text using Tesseract.js
                         const textBox = document.createElement('input');
@@ -299,6 +299,8 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
 
                         ctx.filter = 'grayscale(100%) contrast(150%)';
                         ctx.drawImage(combatImage, 0, 0, canvas.width, canvas.height);
+
+                        combatCell.appendChild(combatImage);    // ******** TEST - DIFF **************
 
                         Tesseract.recognize(combatImage, 'eng', {
                             tessedit_char_whitelist: '0123456789%',
