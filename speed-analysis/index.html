@@ -163,169 +163,170 @@ API Key: <input type="text" id="apiKey" placeholder="Enter API Key">
     }
 
     function findCharacters() {
-    if (inputImage.getAttribute('src') === "default_image.png") {
-        alert("Please upload an image first.");
-        return;
-    }
+        if (inputImage.getAttribute('src') === "default_image.png") {
+            alert("Please upload an image first.");
+            return;
+        }
 
-    const apiKeyInput = document.getElementById('apiKey').value;
+        const apiKeyInput = document.getElementById('apiKey').value;
 
-    if (!apiKeyInput) {
-        alert("Please provide an API Key.");
-        return;
-    }
+        if (!apiKeyInput) {
+            alert("Please provide an API Key.");
+            return;
+        }
 
-    statusMessage.innerText = 'Uploading image...';
+        statusMessage.innerText = 'Uploading image...';
 
-    const imgSrc = inputImage.getAttribute('src');
-    const base64Image = imgSrc.split(',')[1];
+        const imgSrc = inputImage.getAttribute('src');
+        const base64Image = imgSrc.split(',')[1];
 
-    fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: base64Image,
-    })
-    .then(response => response.blob())
-    .then(blob => {
-        const objectURL = URL.createObjectURL(blob);
-        resultImage.src = objectURL;
-        statusMessage.innerText = 'Detection completed. Displaying results...';
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while processing the image.');
-        statusMessage.innerText = 'Error occurred during image processing.';
-    });
+        fetch(`${apiUrl}?api_key=${apiKeyInput}&format=image`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: base64Image,
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const objectURL = URL.createObjectURL(blob);
+            resultImage.src = objectURL;
+            statusMessage.innerText = 'Detection completed. Displaying results...';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing the image.');
+            statusMessage.innerText = 'Error occurred during image processing.';
+        });
 
-    fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: base64Image,
-    })
-    .then(response => response.json())
-    .then(data => {
-        resultText.innerHTML = JSON.stringify(data, null, 2);
-        characterTable.innerHTML = ''; // Clear previous table data
+        fetch(`${apiUrl}?api_key=${apiKeyInput}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: base64Image,
+        })
+        .then(response => response.json())
+        .then(data => {
+            resultText.innerHTML = JSON.stringify(data, null, 2);
+            characterTable.innerHTML = ''; // Clear previous table data
 
-        const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
-        const combats = data.predictions.filter(pred => pred.class === 'combat');
+            const characters = data.predictions.filter(pred => pred.class === 'ally' || pred.class === 'enemy');
+            const combats = data.predictions.filter(pred => pred.class === 'combat');
 
-        // Sort characters by their 'y' value (smallest to largest)
-        characters.sort((a, b) => a.y - b.y);
+            // Sort characters by their 'y' value (smallest to largest)
+            characters.sort((a, b) => a.y - b.y);
 
-        const img = new Image();
-        img.src = inputImage.src;
+            const img = new Image();
+            img.src = inputImage.src;
 
-        img.onload = function () {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
 
-            characters.forEach(character => {
-                const row = document.createElement('tr');
+                characters.forEach(character => {
+                    const row = document.createElement('tr');
 
-                // Cropped character image
-                const charCell = document.createElement('td');
-                const charImg = document.createElement('img');
+                    // Cropped character image
+                    const charCell = document.createElement('td');
+                    const charImg = document.createElement('img');
 
-                canvas.width = character.width;
-                canvas.height = character.height;
-
-                ctx.drawImage(
-                    img,
-                    character.x - character.width / 2,
-                    character.y - character.height / 2,
-                    character.width,
-                    character.height,
-                    0, 0,
-                    character.width, character.height
-                );
-
-                charImg.src = canvas.toDataURL();
-                charImg.style.maxWidth = '100px';
-                charCell.appendChild(charImg);
-                row.appendChild(charCell);
-
-                // Find nearest combat based only on 'y' values
-                const nearestCombat = combats.reduce((closest, current) => {
-                    if (!closest) return current;
-                    return Math.abs(current.y - character.y) < Math.abs(closest.y - character.y) ? current : closest;
-                }, null);
-
-                // Combat text using Tesseract.js
-                const combatCell = document.createElement('td');
-
-                if (nearestCombat) {
-                    // Display combat image
-                    const combatImg = document.createElement('img');
-
-                    canvas.width = nearestCombat.width;
-                    canvas.height = nearestCombat.height;
+                    canvas.width = character.width;
+                    canvas.height = character.height;
 
                     ctx.drawImage(
                         img,
-                        nearestCombat.x - nearestCombat.width / 2,
-                        nearestCombat.y - nearestCombat.height / 2,
-                        nearestCombat.width,
-                        nearestCombat.height,
+                        character.x - character.width / 2,
+                        character.y - character.height / 2,
+                        character.width,
+                        character.height,
                         0, 0,
-                        nearestCombat.width, nearestCombat.height
+                        character.width, character.height
                     );
 
-                    combatImg.src = canvas.toDataURL();
-                    combatImg.style.maxWidth = '100px'; // Adjust as necessary
-                    combatCell.appendChild(combatImg);
+                    charImg.src = canvas.toDataURL();
+                    charImg.style.maxWidth = '100px';
+                    charCell.appendChild(charImg);
+                    row.appendChild(charCell);
 
-                    // Combat text using Tesseract
-                    const textBox = document.createElement('input');
-                    textBox.type = 'text';
-                    textBox.style.width = '80%';
+                    // Find nearest combat based only on 'y' values
+                    const nearestCombat = combats.reduce((closest, current) => {
+                        if (!closest) return current;
+                        return Math.abs(current.y - character.y) < Math.abs(closest.y - character.y) ? current : closest;
+                    }, null);
 
-                    const combatImage = canvas.toDataURL();
+                    // Combat text using Tesseract.js
+                    const combatCell = document.createElement('td');
 
-                    // Preprocess the image for better contrast (optional, depending on results)
-                    // Example: Convert image to grayscale, adjust contrast (use canvas manipulation)
-                    ctx.filter = 'contrast(200%)'; // Enhance contrast
-                    ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
+                    if (nearestCombat) {
+                        // Display combat image
+                        const combatImg = document.createElement('img');
 
-                    // Use Tesseract to recognize text with a whitelist for digits and '%' only
-                    Tesseract.recognize(combatImage, 'eng', {
-                        tessedit_char_whitelist: '0123456789%', // Limit recognized characters
-                        tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE, // Better suited for single-line text
-                        logger: m => console.log(m) // Optional logger for tracking progress
-                    })
-                    .then(({ data: { text } }) => {
-                        textBox.value = text.trim(); // Update the text box with the recognized text
-                    })
-                    .catch(err => {
-                        console.error('Error recognizing text:', err);
-                        textBox.value = 'N/A'; // Fallback in case of OCR failure
-                    });
+                        canvas.width = nearestCombat.width;
+                        canvas.height = nearestCombat.height;
 
-                    combatCell.appendChild(textBox);
-                } else {
-                    combatCell.innerText = 'No combat data'; // Handle if no combat is found
-                }
+                        ctx.drawImage(
+                            img,
+                            nearestCombat.x - nearestCombat.width / 2,
+                            nearestCombat.y - nearestCombat.height / 2,
+                            nearestCombat.width,
+                            nearestCombat.height,
+                            0, 0,
+                            nearestCombat.width, nearestCombat.height
+                        );
 
-                row.appendChild(combatCell);
+                        combatImg.src = canvas.toDataURL();
+                        combatImg.style.maxWidth = '100px'; // Adjust as necessary
+                        combatCell.appendChild(combatImg);
 
-                // Speed
-                const speedCell = document.createElement('td');
-                speedCell.innerText = '0'; // Replace with actual speed if available
-                row.appendChild(speedCell);
+                        // Combat text using Tesseract
+                        const textBox = document.createElement('input');
+                        textBox.type = 'text';
+                        textBox.style.width = '80%';
 
-                characterTable.appendChild(row);
-            });
-        };
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        statusMessage.innerText = 'Error occurred while fetching the results.';
-    });
-}
+                        const combatImage = canvas.toDataURL();
+
+                        // Preprocess the image for better contrast (optional, depending on results)
+                        // Example: Convert image to grayscale, adjust contrast (use canvas manipulation)
+                        // ctx.filter = 'contrast(110%)'; // Enhance contrast
+                        ctx.filter = 'grayscale(100%) contrast(120%)';
+                        ctx.drawImage(combatImg, 0, 0, canvas.width, canvas.height);
+
+                        // Use Tesseract to recognize text with a whitelist for digits and '%' only
+                        Tesseract.recognize(combatImage, 'eng', {
+                            tessedit_char_whitelist: '0123456789%', // Limit recognized characters
+                            tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE, // Better suited for single-line text
+                            logger: m => console.log(m) // Optional logger for tracking progress
+                        })
+                        .then(({ data: { text } }) => {
+                            textBox.value = text.trim(); // Update the text box with the recognized text
+                        })
+                        .catch(err => {
+                            console.error('Error recognizing text:', err);
+                            textBox.value = 'N/A'; // Fallback in case of OCR failure
+                        });
+
+                        combatCell.appendChild(textBox);
+                    } else {
+                        combatCell.innerText = 'No combat data'; // Handle if no combat is found
+                    }
+
+                    row.appendChild(combatCell);
+
+                    // Speed
+                    const speedCell = document.createElement('td');
+                    speedCell.innerText = '0'; // Replace with actual speed if available
+                    row.appendChild(speedCell);
+
+                    characterTable.appendChild(row);
+                });
+            };
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            statusMessage.innerText = 'Error occurred while fetching the results.';
+        });
+    }
 </script>
 
 </body>
